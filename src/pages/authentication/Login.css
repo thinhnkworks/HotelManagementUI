@@ -1,0 +1,28 @@
+  
+  /* Style the container for inputs */
+  .container {      
+    padding: 20px;
+    width: 540px;
+    background-color: #f1f1f1;
+    margin: 300px 400px 300px 400px;
+    
+  }
+  
+input {
+    width: 500px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+  }
+  
+  /* Style the submit button */
+  input[type=submit] {
+    width: 500px;
+    background-color: #1570EF;
+    color: white;
+  }
+
+  
