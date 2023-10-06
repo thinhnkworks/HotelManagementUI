@@ -62,8 +62,7 @@ width: 100vw;
     height: 40px;
     border-radius: 50%;
     display: inline;
-    margin-left: 1000px;
-    /* position: absolute; Thiết lập phần tử thành vị trí tuyệt đối */
+    position: absolute;    /* position: absolute; Thiết lập phần tử thành vị trí tuyệt đối */
     top: 5px; /* Đưa phần tử về phía trên cùng của trang */
-    right: 0; /* Đưa phần tử về góc phải của trang */
+    right: 20px; /* Đưa phần tử về góc phải của trang */
   }
