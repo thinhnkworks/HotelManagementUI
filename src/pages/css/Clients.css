@@ -1,0 +1,53 @@
+.clients{
+    display: block;
+    margin-left: 250px;
+}
+.formThemKH{
+    background-color: #fff;
+    width: 100vw;
+    height: 100vw;
+    left: -100%;
+}
+#title{
+    width: 100vw;
+    height: 30px;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.btn_Fill{
+    height: 60px;
+    width: 100vw;
+    font-size: larger;
+
+}
+button{
+    padding: 2px 20px;
+    position: relative;
+    top: 10px;
+    left: 1000px;
+    display: inline;
+    height: 40px;
+    align-items: center;
+    vertical-align: middle; /* Để căn giữa theo chiều dọc nếu cần */
+    right: 30px;
+    border-radius: 10px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+button[type="submit"]:hover
+{
+    background-color: #3b85ee;
+}
+button[type="submit"]{
+    background-color: #1570EF;
+    color: #fff;
+}   
+button[type="submitLoc"]:hover
+{
+    background-color: #cfd1d4;
+}
+button[type="submitLoc"]
+{
+    background-color: #bebebe;
+    color: #000;
+}
