@@ -3,7 +3,7 @@ import './Login.css'
 function Login() {
   return (
     <>
-    <div class="container">
+    <div class="containerLogin">
 
         <div><label className="textInput" for="usrname">Mã nhân viên</label></div>
     <div><input type="text" id="usrname" name="usrname" /></div>

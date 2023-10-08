@@ -1,12 +1,17 @@
 .clients{
     display: block;
-    margin-left: 250px;
+    padding-left: 250px;
+}
+.clients p{
+    position:absolute;
+    width: 100vw;
 }
 .formThemKH{
     background-color: #fff;
     width: 100vw;
     height: 100vw;
     left: -100%;
+
 }
 #title{
     width: 100vw;
@@ -51,3 +56,64 @@ button[type="submitLoc"]
     background-color: #bebebe;
     color: #000;
 }
+.tableThemKH{
+    margin-top: 30px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/* CSS cho bảng */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px; /* Khoảng cách dưới bảng */
+  }
+  
+  /* CSS cho các phần tử th (tiêu đề cột) */
+  th {
+    background-color: #f2f2f2; /* Màu nền tiêu đề cột */
+    border: 1px solid #ddd; /* Viền cho tiêu đề cột */
+    padding: 10px; /* Khoảng cách bên trong tiêu đề cột */
+    text-align: left; /* Căn lề văn bản trong tiêu đề cột */
+  }
+  
+  /* CSS cho các phần tử td (dữ liệu) */
+  td {
+    border: 1px solid #ddd; /* Viền cho ô dữ liệu */
+    padding: 10px; /* Khoảng cách bên trong ô dữ liệu */
+    text-align: left; /* Căn lề văn bản trong ô dữ liệu */
+  }
+  
+  /* CSS cho hàng chẵn (sử dụng pseudo-class nth-child) */
+  tr:nth-child(even) {
+    background-color: #f2f2f2; /* Màu nền cho hàng chẵn */
+  }
+/* Trong file CSS của bạn hoặc inline CSS */
+.pagination {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .page-item {
+    margin: 0;
+  }
+  
+  .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .page-link:hover {
+    background-color: #0056b3;
+  }
+  
+  .tableThemKH .active {
+    background-color: #95beeb;
+  }
+  
