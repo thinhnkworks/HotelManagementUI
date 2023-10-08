@@ -9,7 +9,7 @@ import './Navbar.css';
 import { IconContext } from 'react-icons';
 
 function Navbar() {
-  const [sidebar, setSidebar] = useState(true);
+  const [ sidebar, setSidebar] = useState(true);
 
   const showSidebar = () => setSidebar(!sidebar);
 
@@ -33,7 +33,7 @@ function Navbar() {
               </Link> */}
             </li>  
             {SidebarData.map((item, index) => {
-              return (
+              return (  
                 <li key={index} className={item.cName}> 
                   <Link to={item.path}>
                     {item.icon}
