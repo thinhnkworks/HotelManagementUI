@@ -1,24 +1,52 @@
-import React, { useState } from 'react';
-import './css/Clients.css'
+import React, { useState, useEffect } from 'react';
+import './css/Clients.css';
 import AddClientsForm from './Clients/AddClients.js';
-import DataClients from './Data/DataClients.json';
+import DeleteClientForm from './Clients/DeleteClients.js';
 import { FiFilter } from 'react-icons/fi';
+import {BsThreeDotsVertical} from 'react-icons/bs';
+import {AiTwotoneDelete} from 'react-icons/ai';
+
 
 function Clients() {
+
+// ******************-------------------------------Form AddClient
+const [addClients, setAddClients] = useState(false);
+const ShowAddClients = () => setAddClients(!addClients);
+
+  const [dataClients, setDataClients] = useState([]);
+  const apiKhachHangs="https://service-hotelmanagement-dev.azurewebsites.net/api/khachhangs";
+  useEffect(() => {
+    // Fetch data from the API URL
+    fetch(apiKhachHangs)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setDataClients(data.data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+
+  
+  //*******************------------------ */ [] để đảm bảo sẽ chạy chỉ một lần sau khi nạp trang
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
-  const records = DataClients.slice(firstIndex, lastIndex);
-  const npage = Math.ceil(DataClients.length / recordsPerPage);
+  const records = dataClients.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(dataClients.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
-
-  const [addClients, setAddClients] = useState(false);
-  const ShowAddClients = () => setAddClients(!addClients);
 
   const prevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
+      setCurrentPage(currentPage - 1);
     }
   }
 
@@ -28,9 +56,94 @@ function Clients() {
 
   const nextPage = () => {
     if (currentPage < npage) {
-      setCurrentPage(currentPage + 1)
+      setCurrentPage(currentPage + 1);
     }
   }
+
+
+//********************-------------------------From EditClient
+const [editClient, setEditClients] = useState(false);
+const ShowEditClient = () => setEditClients(!editClient);
+
+
+const handleViewClick = () => {
+  ShowEditClient(true);
+};
+const handleCancelEdit = () => {
+  ShowEditClient(false);
+};
+
+const handleEditClick = (maKH) => {
+  // Tìm vị trí của phần tử cần xóa trong mảng dataClients
+  const indexToRemove = dataClients.findIndex((client) => client.maKH === maKH);
+
+  if (indexToRemove !== -1) {
+    // Thực hiện yêu cầu DELETE đến API
+    fetch(`https://service-hotelmanagement-dev.azurewebsites.net/api/khachhangs/${maKH}`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status}`);
+        }
+
+        // Xóa phần tử khỏi mảng dataClients sau khi xóa thành công trên API
+        const newDataClients = [...dataClients];
+        newDataClients.splice(indexToRemove, 1);
+
+        // Cập nhật danh sách dữ liệu
+        setDataClients(newDataClients);
+      })
+      .catch((error) => {
+        console.error('Error deleting data:', error);
+      });
+
+    // Đóng Form Hủy
+    ShowDeleteClient(false);  
+  }
+};
+
+  //**********************----------------------Form DeleteClient
+const [deleteClient, setDeleteClients] = useState(false);
+const ShowDeleteClient = () => setDeleteClients(!deleteClient);
+
+
+  const handleDeleteClick = () => {
+    ShowDeleteClient(true);
+  };
+  const handleCancelDelete = () => {
+    ShowDeleteClient(false);
+  };
+
+const handleRemoveClick = (maKH) => {
+  // Tìm vị trí của phần tử cần xóa trong mảng dataClients
+  const indexToRemove = dataClients.findIndex((client) => client.maKH === maKH);
+
+  if (indexToRemove !== -1) {
+    // Thực hiện yêu cầu DELETE đến API
+    fetch(`https://service-hotelmanagement-dev.azurewebsites.net/api/khachhangs/${maKH}`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status}`);
+        }
+
+        // Xóa phần tử khỏi mảng dataClients sau khi xóa thành công trên API
+        const newDataClients = [...dataClients];
+        newDataClients.splice(indexToRemove, 1);
+
+        // Cập nhật danh sách dữ liệu
+        setDataClients(newDataClients);
+      })
+      .catch((error) => {
+        console.error('Error deleting data:', error);
+      });
+
+    // Đóng Form Hủy
+    ShowDeleteClient(false);
+  }
+};
 
   return (
     <div className='clients'>
@@ -57,22 +170,31 @@ function Clients() {
                 <th>Xếp hạng</th>
               </tr>
             </thead>
-            <tbody>
+              <tbody>
               {records.map((d, i) => (
                 <tr key={i}>
-                  <td>{d['Mã khách hàng']}</td>
-                  <td>{d['Họ tên']}</td>
-                  <td>{d['Số lần nghỉ']}</td>
-                  <td>{d['Ngày sinh']}</td>
-                  <td>{d['Giới tính']}</td>
-                  <td>{d['Địa chỉ']}</td>
-                  <td>{d['Số điện thoại']}</td>
-                  <td>{d['CCCD']}</td>
-                  <td>{d['Xếp hạng']}</td>
+                  <td>{d.maKH}</td>
+                  <td>{d.hoTen}</td>
+                  <td>{d.soLanNghi}</td>
+                  <td>{d.ngaySinh}</td>
+                  <td>{d.gioiTinh}</td>
+                  <td>{d.diaChi}</td>
+                  <td>{d.sdt}</td>
+                  <td>{d.cccd}</td>
+                  <td>{d.xepHang ? 'Có' : 'Không'}</td>
+                  <td id='removeData' onClick={() => handleDeleteClick()}> <AiTwotoneDelete/></td>
+                  <div>
+                  {deleteClient && (
+        <DeleteClientForm onCancel={handleCancelDelete} onConfirm={() => handleRemoveClick(d.maKH)} />
+      )}
+                  </div>
+                  <td id='editData' onClick={() => handleEditClick(d.maKH)}> <BsThreeDotsVertical/></td>
                 </tr>
               ))}
             </tbody>
+                
           </table>
+
           <nav>
             <ul className='pagination'>
               <li className='page-item'>

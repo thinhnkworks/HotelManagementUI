@@ -80,10 +80,17 @@
 }
   
 #maKhachHang,
-#xepHang {
+#xepHang,
+#soLanNghi {
   background-color: #cecece;
 }
 #maKhachHang.editable,
 #xepHang.editable {
   border-color: blue; /* Thay đổi màu khung input khi trong trạng thái chỉnh sửa */
+}
+
+.error-message{
+  font-size:18px;
+  color: red;
+  font-family: 'Times New Roman', Times, serif;
 }
