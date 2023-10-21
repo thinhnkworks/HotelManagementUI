@@ -60,6 +60,7 @@ function AddClientsForm(props) {
     
       .then((response) => {
         if (!response.ok) {
+          alert("Số điện thoại hoặc CCCD của bạn đã tồn tại .");
           throw new Error(`Network response was not ok: ${response.status}`);
         }
         console.log(response)
