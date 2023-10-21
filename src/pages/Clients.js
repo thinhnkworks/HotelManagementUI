@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './css/Clients.css';
 import AddClientsForm from './Clients/AddClients.js';
 import DeleteClientForm from './Clients/DeleteClients.js';
+import EditClientsForm from './Clients/EditClients.js';
 import { FiFilter } from 'react-icons/fi';
 import {BsThreeDotsVertical} from 'react-icons/bs';
 import {AiTwotoneDelete} from 'react-icons/ai';
@@ -10,31 +11,19 @@ import {AiTwotoneDelete} from 'react-icons/ai';
 function Clients() {
 
 // ******************-------------------------------Form AddClient
-const [addClients, setAddClients] = useState(false);
-const ShowAddClients = () => setAddClients(!addClients);
+const [addClientsForm, setAddClients] = useState(false);
+const ShowAddClients = () => setAddClients(!addClientsForm);
 
   const [dataClients, setDataClients] = useState([]);
   const apiKhachHangs="https://service-hotelmanagement-dev.azurewebsites.net/api/khachhangs";
-  useEffect(() => {
-    // Fetch data from the API URL
-    fetch(apiKhachHangs)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setDataClients(data.data);
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+
+  // Function to add a new client
+  const addClient = (newClient) => {
+    // Add the new client to the dataClients state
+    setDataClients((prevData) => [...prevData, newClient]);
+  };
 
 
-  
   //*******************------------------ */ [] để đảm bảo sẽ chạy chỉ một lần sau khi nạp trang
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
@@ -62,61 +51,46 @@ const ShowAddClients = () => setAddClients(!addClients);
 
 
 //********************-------------------------From EditClient
-const [editClient, setEditClients] = useState(false);
-const ShowEditClient = () => setEditClients(!editClient);
+const [selectedClient, setSelectedClient] = useState(null);
 
 
-const handleViewClick = () => {
+const [editClientsForm, setEditClients] = useState(false);
+const ShowEditClient = () => setEditClients(!editClientsForm);
+
+const handleRowClick = (client) => {
+  setSelectedClient(client);
+  console.log(client);
   ShowEditClient(true);
 };
-const handleCancelEdit = () => {
-  ShowEditClient(false);
+
+
+const handleEditClick = () => {
+  // Tìm vị trí của phần tử cần sửa trong mảng dataClients
+    setEditClients(!editClientsForm);
+    setSelectedClient(null);
 };
 
-const handleEditClick = (maKH) => {
-  // Tìm vị trí của phần tử cần xóa trong mảng dataClients
-  const indexToRemove = dataClients.findIndex((client) => client.maKH === maKH);
 
-  if (indexToRemove !== -1) {
-    // Thực hiện yêu cầu DELETE đến API
-    fetch(`https://service-hotelmanagement-dev.azurewebsites.net/api/khachhangs/${maKH}`, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status}`);
-        }
-
-        // Xóa phần tử khỏi mảng dataClients sau khi xóa thành công trên API
-        const newDataClients = [...dataClients];
-        newDataClients.splice(indexToRemove, 1);
-
-        // Cập nhật danh sách dữ liệu
-        setDataClients(newDataClients);
-      })
-      .catch((error) => {
-        console.error('Error deleting data:', error);
-      });
-
-    // Đóng Form Hủy
-    ShowDeleteClient(false);  
-  }
-};
 
   //**********************----------------------Form DeleteClient
+const [clientToDelete, setClientToDelete] = useState(null);
+
 const [deleteClient, setDeleteClients] = useState(false);
 const ShowDeleteClient = () => setDeleteClients(!deleteClient);
 
 
-  const handleDeleteClick = () => {
-    ShowDeleteClient(true);
+  const handleDeleteClick = (client) => {
+    setClientToDelete(client);
+  ShowDeleteClient(true);
   };
   const handleCancelDelete = () => {
     ShowDeleteClient(false);
   };
 
-const handleRemoveClick = (maKH) => {
-  // Tìm vị trí của phần tử cần xóa trong mảng dataClients
+const handleRemoveClick = () => {
+  if (clientToDelete) {
+    const maKH = clientToDelete.maKH;
+    // Tìm vị trí của phần tử cần xóa trong mảng dataClients
   const indexToRemove = dataClients.findIndex((client) => client.maKH === maKH);
 
   if (indexToRemove !== -1) {
@@ -143,7 +117,27 @@ const handleRemoveClick = (maKH) => {
     // Đóng Form Hủy
     ShowDeleteClient(false);
   }
+  }
+  
 };
+useEffect(() => {
+  // Fetch data from the API URL
+  fetch(apiKhachHangs)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setDataClients(data.data);
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error);
+    });
+}, [addClientsForm, selectedClient]);
+
 
   return (
     <div className='clients'>
@@ -151,7 +145,7 @@ const handleRemoveClick = (maKH) => {
       <div className='btn_FillAdd'>
         <button id='btn_themKH' type="submit" onClick={ShowAddClients}>Thêm khách hàng</button>
         <button id='btn_loc' type='submitLoc'> <FiFilter /> Lọc</button>
-        <div>{addClients && <AddClientsForm onCancel={() => setAddClients(!addClients)} />}</div>
+        <div>{addClientsForm && <AddClientsForm onCancel={() => setAddClients(!addClientsForm)}  onAddClient={addClient}/>}</div>
       </div>
       {/* class Thêm khách hàng */}
       <div className='tableThemKH'>
@@ -182,19 +176,26 @@ const handleRemoveClick = (maKH) => {
                   <td>{d.sdt}</td>
                   <td>{d.cccd}</td>
                   <td>{d.xepHang ? 'Có' : 'Không'}</td>
-                  <td id='removeData' onClick={() => handleDeleteClick()}> <AiTwotoneDelete/></td>
-                  <div>
+                  <td id='removeData' onClick={() => handleDeleteClick(d)}> <AiTwotoneDelete/></td>
+                  <td id='editData' onClick={() => {handleRowClick(d);console.log(editClientsForm)}}> <BsThreeDotsVertical/></td>
+                  <div> 
                   {deleteClient && (
-        <DeleteClientForm onCancel={handleCancelDelete} onConfirm={() => handleRemoveClick(d.maKH)} />
-      )}
+        <DeleteClientForm onCancel={handleCancelDelete} onConfirm={() => handleRemoveClick(d.maKH) }  clientToDelete={clientToDelete}/>)}
                   </div>
-                  <td id='editData' onClick={() => handleEditClick(d.maKH)}> <BsThreeDotsVertical/></td>
+                  <div>
+                    {editClientsForm && (<EditClientsForm onCancel={() => {setEditClients(!editClientsForm); setSelectedClient(null);console.log(editClientsForm)}}
+                                        editData={{
+                                          maKH: selectedClient.maKH,
+                                          ...selectedClient,
+                                        }}
+                                        onConfirm={() => handleEditClick()}
+/>
+                                      )}
+                  </div>
                 </tr>
               ))}
-            </tbody>
-                
+            </tbody>             
           </table>
-
           <nav>
             <ul className='pagination'>
               <li className='page-item'>

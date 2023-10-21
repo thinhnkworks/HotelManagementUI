@@ -32,7 +32,6 @@ function AddClientsForm(props) {
         });
   };
 
-  
 
   const handleSubmit = (e) => {
   
@@ -56,17 +55,20 @@ function AddClientsForm(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(dataToSend),
+      
     })
     
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
+        console.log(response)
         return response.json();
       })
       .then((data) => {
         console.log('Dữ liệu đã được gửi thành công:', data);
         // Gọi hàm callback để thông báo cho component cha
+        props.onAddClient(newClient); // Pass the new client data
         props.onCancel();
         // Có thể thêm xử lý khác sau khi gửi thành công
       })
@@ -168,112 +170,3 @@ function AddClientsForm(props) {
 }
 
 export default AddClientsForm;
-
-
-// import React, { useState } from 'react';
-// import './AddClients.css';
-
-// function AddClientsForm(props) {
-//   const [newClient, setNewClient] = useState({
-//     HoTen: '',
-//     NgaySinh: '',
-//     GioiTinh: '',
-//     DiaChi: '',
-//     Sdt: '',
-//     Cccd: '',
-//   });
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setNewClient({
-//       ...newClient,
-//       [name]: value,
-//     });
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-  
-//     // Chuẩn bị dữ liệu cần gửi lên API
-//     const dataToSend = { ...newClient };
-  
-//     // Gửi dữ liệu khách hàng mới lên API
-//     fetch('https://service-hotelmanagement-dev.azurewebsites.net/api/khachhangs', {
-//       method: 'POST',
-//       mode:'cors',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(dataToSend),
-//     })
-//       .then((response) => {
-//         if (!response.ok) {
-//           throw new Error(`Network response was not ok: ${response.status}`);
-//         }
-//         return response.json();
-//       })
-//       .then((data) => {
-//         console.log('Dữ liệu đã được gửi thành công:', data);
-//         // Gọi hàm callback để thông báo cho component cha
-//         props.onCancel();
-//         // Có thể thêm xử lý khác sau khi gửi thành công
-//       })
-//       .catch((error) => {
-//         console.error('Lỗi khi gửi dữ liệu:', error);
-//         // Hiển thị thông báo lỗi cho người dùng (hoặc xử lý lỗi theo cách phù hợp với ứng dụng của bạn)
-//       });
-//   };
-//   const handleSendClick = (e) => {
-//     e.preventDefault(); // Ngăn chặn mặc định của biểu mẫu
-//     handleSubmit(e); // Truyền sự kiện vào hàm handleSubmit
-//   };
-//   const handleCancelClick = () => {
-//     // Gọi hàm callback để thông báo cho component cha
-//     props.onCancel();
-//   };
-
-//   return (
-//     <div className="overlay">
-//       <div className="form-container">
-//         <form className="containerAddClients" onSubmit={handleSubmit}>
-//           <div className="column-1">
-//             <label>Mã khách hàng</label><br />
-//             <input
-//               type="text"
-//               id="maKhachHang"
-//               name="maKH"
-//               readOnly={true}
-//               disabled={true}
-//               value={newClient.maKH}
-//             /><br /><br />
-//             <label>Số lần nghỉ</label><br/>
-//             <input type="text" id="soLanNghi" name="soLanNghi" placeholder='Nhập số lần nghỉ'value={newClient.soLanNghi}  onChange={handleInputChange}/><br /><br />
-//               <label>Giới tính</label><br/>
-//               <input type="text" id="GioiTinh" name="GioiTinh" placeholder='Nhập giới tính' value={newClient.GioiTinh} onChange={handleInputChange}/><br /><br />
-//               <label>Số điện thoại</label><br/>
-//               <input type="text" id="Sdt" name="Sdt" placeholder='Nhập số điện thoại' value={newClient.Sdt}  onChange={handleInputChange}/><br /><br />
-//               <label>Xếp hạng</label><br/>
-//               <input type="text" id="xepHang" name="xepHang" readOnly={true} disabled={true} value={newClient.xepHang}  onChange={handleInputChange}/><br /><br />
-//           </div>
-//           <div className="column-2">
-//           <label>Họ và tên</label><br/>
-//               <input type="text" id="HoTen" name="HoTen" placeholder='Nhập họ và tên' value={newClient.HoTen} onChange={handleInputChange}/><br /><br />
-//               <label>Ngày sinh</label><br/>
-//               <input type="text" id="NgaySinh" name="NgaySinh" placeholder='Nhập ngày sinh' value={newClient.NgaySinh} onChange={handleInputChange}/><br /><br />
-//               <label>Địa chỉ</label><br/>
-//               <input type="text" id="DiaChi" name="DiaChi" placeholder='Nhập địa chỉ' value={newClient.DiaChi}  onChange={handleInputChange}/><br /><br />
-//               <label>Cccd</label><br/>
-//               <input type="text" id="Cccd" name="Cccd" placeholder='Nhập số Cccd' value={newClient.Cccd}  onChange={handleInputChange}/><br /><br /><br />
-//           </div>
-//           <div className="button">
-//             <input type="submit" value="Hủy" id="cancel-button" onClick={handleCancelClick} />
-//             <input type="submit" value="Gửi" id="submit-button" onClick={handleSendClick}/>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default AddClientsForm;
-
