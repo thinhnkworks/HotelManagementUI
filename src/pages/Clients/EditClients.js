@@ -122,7 +122,7 @@ function EditClientsForm(props) {
   };
 
   return (
-    <div className='formAddClient'>
+    <div className='formEditClient'>
       <div className="overlay">
         <div className="form-container">
           <form className="containerEditClients" onSubmit={handleSubmit}>
