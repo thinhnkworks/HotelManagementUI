@@ -1,0 +1,23 @@
+.btn_ListRooms button{
+    background-color: #ffffff;
+    color: #000000;
+    display: inline;
+    height: 40px;
+    font-size: 15px;
+    border-radius: 20px;
+    margin-left: 5px;
+    cursor: pointer;
+    padding: 2px 20px;
+}
+.btn_ListRooms button:hover{
+
+    color: #1570EF;
+    border-color: #1570EF;
+
+}
+.btn_ListRooms .selected {
+    color: #1570EF;
+    border-color: #1570EF;
+    /* Các thuộc tính CSS khác mà bạn muốn áp dụng cho nút đã chọn */
+  }
+  

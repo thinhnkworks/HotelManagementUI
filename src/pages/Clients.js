@@ -95,7 +95,7 @@ const handleRemoveClick = () => {
 
   if (indexToRemove !== -1) {
     // Thực hiện yêu cầu DELETE đến API
-    fetch(`https://service-hotelmanagement-dev.azurewebsites.net/api/khachhangs/${maKH}`, {
+    fetch(`${apiKhachHangs}/${maKH}`, {
       method: 'DELETE',
     })
       .then((response) => {
