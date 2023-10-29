@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
-import './AddServices.css';
+import './EditRoom.css';
 
-function EditServiceForm(props) {
-  const [newService, setNewService] = useState({
-    tenDV: props.editData.tenDV,
-    gia: props.editData.gia,
+function EditRoomForm(props) {
+  const [newRoom, setNewRoom] = useState({
+    maLoaiPhong: props.editData.maLoaiPhong,
     trangThai: props.editData.trangThai,
   });
 
   const [errors, setErrors] = useState({
-    tenDV: '',
-    gia: '',
+    maLoaiPhong: '',
     trangThai: '',
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewService({
-      ...newService,
+    setNewRoom({
+      ...newRoom, 
       [name]: value,
     });
         // Xóa thông báo lỗi khi người dùng bắt đầu nhập
@@ -27,15 +25,15 @@ function EditServiceForm(props) {
         });
   };
   const handleTrangThaisChange = (e) => {
-    const isReady = e.target.value === 'true';
-    setNewService({ ...newService, trangThais: isReady });
+    const isReady = e.target.value === 0;
+    setNewRoom({ ...newRoom, trangThais: isReady });
   };
 
 
   const handleSubmit = (e) => {
   
     // Kiểm tra và hiển thị thông báo lỗi
-    const validationErrors = validateInput(newService);
+    const validationErrors = validateInput(newRoom);
     setErrors(validationErrors);
 
     if (Object.values(validationErrors).some((error) => error)) {
@@ -44,10 +42,10 @@ function EditServiceForm(props) {
     }
 
     // Chuẩn bị dữ liệu cần gửi lên API
-    const dataToSend = { ...newService };
+    const dataToSend = { ...newRoom };
   console.log(JSON.stringify(dataToSend));
     // Gửi dữ liệu khách hàng mới lên API
-    fetch(`https://service-hotelmanagement-dev.azurewebsites.net/api/dichvus/${props.editData.maDV}`, {
+    fetch(`https://service-hotelmanagement-dev.azurewebsites.net/api/phongs/${props.editData.maPhong}`, {
         method: 'PATCH',
         mode: 'cors',
         headers: {
@@ -72,22 +70,15 @@ function EditServiceForm(props) {
     };
 
 
-  const validateInput = (surcharge) => {
+  const validateInput = (listRooms) => {
     const errors = {
-      tenDV: '',
+      maLoaiPhong: '',
       gia: '',
     };
   
-    // Kiểm tra tên dịch vụ
-    if (!surcharge.tenDV) {
-      errors.tenDV = "Vui lòng nhập tên dịch vụ.";
-    }
-  
-    // Kiểm tra giá
-    if (surcharge.gia === undefined || surcharge.gia === null) {
-      errors.gia = "Vui lòng nhập giá.";
-    } else if (!/^\d+(\.\d+)?$/.test(surcharge.gia) || parseFloat(surcharge.gia) <= 0) {
-      errors.gia = "Giá phải là một số lớn hơn 0.";
+    // Kiểm tra mã phòng
+    if (!listRooms.maLoaiPhong) {
+      errors.maLoaiPhong = "Mã loại phòng được đánh bằng số.";
     }
   
     return errors;
@@ -111,19 +102,17 @@ function EditServiceForm(props) {
       <div className="overlay">
         <div className="form-container">
           <form className="containerAddServices" onSubmit={handleSubmit}>
-              <label>Mã dịch vụ</label><br/>
-              <input type="text" id='maDV' name="maDV" placeholder="Mã dịch vụ" disabled  onChange={handleInputChange} /><br /><br />
-              <label>Tên dịch vụ</label><br/>
-              <input type="text" id="tenDV" name="tenDV" placeholder='Nhập tên dịch vụ' value={newService.tenDV} onChange={handleInputChange}/><br /><br />
-              <label>Giá</label><br/>
-              <input type="text" name="gia" placeholder="Nhập giá" value={newService.gia} onChange={handleInputChange} /><br /><br />
-              <div className="error-message">{errors.gia}</div><br />
+              <label>Mã phòng</label><br/>
+              <input type="text" id='maPhong' name="maPhong" placeholder="Mã phòng" disabled  onChange={handleInputChange} /><br /><br />
+              <label>Mã loại phòng</label><br/>
+              <input type="text" id="maLoaiPhong" name="maLoaiPhong" placeholder='Nhập mã loại phòng' value={newRoom.maLoaiPhong} onChange={handleInputChange}/><br /><br />
+              
               <label for="trangThais">Trạng thái</label><br/>
-              <select name="trangThais" id="trangThais" value={newService.trangThais} onChange={handleTrangThaisChange}>
+              <select name="trangThais" id="trangThais" value={newRoom.trangThais} onChange={handleTrangThaisChange}>
         <option value={true}>Đã sẵn sàng</option>
         <option value={false}>Chưa sẵn sàng</option>
       </select>
-              {/* <input type="text" name="trangThai"  placeholder="Nhập trạng thái" value={newService.trangThai} onChange={handleInputChange} /><br /> */}
+              {/* <input type="text" name="trangThai"  placeholder="Nhập trạng thái" value={newRoom.trangThai} onChange={handleInputChange} /><br /> */}
               <div className="error-message">{errors.trangThai}</div><br /><br />
               <div className="button ">
               <input type="submit" value="Hủy" id="cancel-button" onClick={handleCancelClick} />
@@ -136,4 +125,4 @@ function EditServiceForm(props) {
   );
 }
 
-export default EditServiceForm;
+export default EditRoomForm;
