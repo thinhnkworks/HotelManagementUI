@@ -32,7 +32,7 @@ function Navbar() {
                 <AiIcons.AiOutlineClose />
               </Link> */}
             </li>  
-            {SidebarData.map((item, index) => {
+            {SidebarDataAdmin.map((item, index) => {
               return (  
                 <li key={index} className={item.cName}> 
                   <Link to={item.path}>
