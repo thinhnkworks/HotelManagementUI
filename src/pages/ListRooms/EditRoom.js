@@ -4,12 +4,12 @@ import './EditRoom.css';
 function EditRoomForm(props) {
   const [newRoom, setNewRoom] = useState({
     maLoaiPhong: props.editData.maLoaiPhong,
-    trangThai: props.editData.trangThai,
+    trangThai: props.editData.trangThai, // Thêm trạng thái vào state
   });
-
+  
   const [errors, setErrors] = useState({
     maLoaiPhong: '',
-    trangThai: '',
+    trangThai: '', // Thêm trạng thái vào errors
   });
 
   const handleInputChange = (e) => {
@@ -25,8 +25,8 @@ function EditRoomForm(props) {
         });
   };
   const handleTrangThaisChange = (e) => {
-    const isReady = e.target.value === 0;
-    setNewRoom({ ...newRoom, trangThais: isReady });
+    const trangThaisValue = parseInt(e.target.value); // Chuyển giá trị sang số nguyên
+    setNewRoom({ ...newRoom, trangThai: trangThaisValue });
   };
 
 
@@ -70,16 +70,16 @@ function EditRoomForm(props) {
     };
 
 
-  const validateInput = (listRooms) => {
-    const errors = {
-      maLoaiPhong: '',
-      gia: '',
-    };
-  
+    const validateInput = (listRooms) => {
+      const errors = {
+        maLoaiPhong: '',
+        trangThai: '', // Thêm trạng thái vào errors
+      };
     // Kiểm tra mã phòng
     if (!listRooms.maLoaiPhong) {
       errors.maLoaiPhong = "Mã loại phòng được đánh bằng số.";
     }
+  
   
     return errors;
   };
@@ -107,10 +107,10 @@ function EditRoomForm(props) {
               <label>Mã loại phòng</label><br/>
               <input type="text" id="maLoaiPhong" name="maLoaiPhong" placeholder='Nhập mã loại phòng' value={newRoom.maLoaiPhong} onChange={handleInputChange}/><br /><br />
               
-              <label for="trangThais">Trạng thái</label><br/>
-              <select name="trangThais" id="trangThais" value={newRoom.trangThais} onChange={handleTrangThaisChange}>
-        <option value={true}>Đã sẵn sàng</option>
-        <option value={false}>Chưa sẵn sàng</option>
+              <label for="trangThai">Trạng thái</label><br/>
+              <select name="trangThai" id="trangThai" value={newRoom.trangThai} onChange={handleTrangThaisChange}>
+        <option value={1}>Đã thuê</option>
+        <option value={0}>Còn trống</option>
       </select>
               {/* <input type="text" name="trangThai"  placeholder="Nhập trạng thái" value={newRoom.trangThai} onChange={handleInputChange} /><br /> */}
               <div className="error-message">{errors.trangThai}</div><br /><br />

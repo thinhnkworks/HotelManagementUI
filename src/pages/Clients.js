@@ -9,6 +9,9 @@ import {AiTwotoneDelete} from 'react-icons/ai';
 
 
 function Clients() {
+    // Thêm state để lưu CCCD và kết quả kiểm tra
+const [cccdValue, setCccdValue] = useState('');
+const [cccdCheckResult, setCccdCheckResult] = useState({});
 
 // ******************-------------------------------Form AddClient
 const [addClientsForm, setAddClients] = useState(false);
@@ -139,10 +142,62 @@ useEffect(() => {
 }, [addClientsForm, selectedClient]);
 
 
+const handleCheckCCCD = async () => {
+  // Kiểm tra xem CCCD có giá trị hay không
+  if (!cccdValue) {
+    alert("Vui lòng nhập số CCCD để kiểm tra.");
+    return;
+  }
+
+  try {
+    // Gửi yêu cầu GET đến API
+    const response = await fetch(`https://service-hotelmanagement-dev.azurewebsites.net/api/KhachHangs/cccd/${cccdValue}`, {
+      method: 'GET',
+      mode: 'cors', // Đảm bảo mode là 'cors'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // Cập nhật state với kết quả từ API
+    setCccdCheckResult(data);
+
+    // Sử dụng window.alert thay vì window.confirm
+    if (data.success) {
+      // Kiểm tra xem maKH có tồn tại trong dữ liệu hay không
+      const maKH = data.data.maKH || 'Không có'; // Nếu không tồn tại, sử dụng 'Không có'
+      // Hiển thị maKH trong cửa sổ thông báo
+      alert(`Khách hàng còn tồn tại. Mã khách hàng là: ${maKH}`);
+
+      // Tự động tắt thông báo sau 3 giây (3000 miligiây)
+      setTimeout(() => {
+        // Đóng cửa sổ hoặc thực hiện hành động khác
+        // Ví dụ: window.close();
+      }, 3000);
+    } else {
+      alert("Không tìm thấy thông tin khách hàng.");
+    }
+  } catch (error) {
+    console.error('Lỗi khi kiểm tra CCCD:', error);
+    alert("Khách hàng trên chưa có trong hệ thống.");
+  }
+};
+
+
   return (
     <div className='clients'>
       <p id='title'>Khách hàng</p>
       <div className='btn_FillAdd'>
+
+<br />
+<input type="text" name="cccd" placeholder="Nhập căn cước công dân " onChange={(e) => setCccdValue(e.target.value)} />
+<input type="submit" value="Kiểm tra" id="submit-button" onClick={handleCheckCCCD}/>
         <button id='btn_themKH' type="submit" onClick={ShowAddClients}>Thêm khách hàng</button>
         <button id='btn_loc' type='submitLoc'> <FiFilter /> Lọc</button>
         <div>{addClientsForm && <AddClientsForm onCancel={() => setAddClients(!addClientsForm)}  onAddClient={addClient}/>}</div>

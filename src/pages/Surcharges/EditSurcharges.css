@@ -15,8 +15,8 @@
   .formSurcharge .form-container {
     display: flex;
     background-color: white;
-    width: 40%;
-    height: 60%;
+    width: 90%;
+    height: 90%;
     align-items: center; /* Canh giữa theo chiều dọc */
     justify-content: center; /* Canh giữa theo chiều ngang */
     z-index: 2;

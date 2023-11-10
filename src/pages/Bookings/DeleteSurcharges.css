@@ -1,0 +1,48 @@
+/* DeleteClients.css */
+.formDeleteSurcharges .form-container {
+    display: block;
+    background-color: white;
+    width: 300px;
+    height:250px;
+    border-radius: 30px;
+    text-align: center; /* Căn giữa nội dung */
+    z-index: 2;
+  }
+.formDeleteSurcharges .overlay{
+    background-color: rgba(0, 0, 0, 0.08);
+}
+.formDeleteSurcharges  button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  display: inline-block; /* Để button nằm cùng 1 hàng */
+  margin: 0 10px; /* Khoảng cách giữa các button ngang */
+}
+
+.formDeleteSurcharges  button:hover {
+  background-color: #0056b3;
+}
+
+.formDeleteSurcharges .form-container label {
+    display: block; /* Để label nằm trên 1 dòng */
+  }
+
+  
+  .formDeleteSurcharges .form-container div {
+    margin: 10px 0; /* Khoảng cách giữa các phần tử dọc */
+  }
+  
+  .formDeleteSurcharges .form-container label {
+    display: block; /* Để label nằm trên 1 dòng */
+  }
+
+  .formDeleteSurcharges .form-container .error-icon {
+    font-size: 50px;
+    color: red;
+
+}
