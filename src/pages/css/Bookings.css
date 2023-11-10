@@ -1,0 +1,36 @@
+.bookings .tableThemKH{
+    margin-top: 30px;
+    margin-left: 250px;
+    font-family: 'Times New Roman', Times, serif;
+}
+.bookings .btn_FillAdd button{
+    padding: 2px 20px;
+    position: relative;
+    top: 10px;
+    left: 1250px;
+    display: inline;
+    height: 40px;
+    align-items: center;
+    vertical-align: middle; /* Để căn giữa theo chiều dọc nếu cần */
+    right: 30px;
+    border-radius: 10px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+button[type="submit"]:hover
+{
+    background-color: #3b85ee;
+}
+button[type="submit"]{
+    background-color: #1570EF;
+    color: #fff;
+}   
+button[type="submitLoc"]:hover
+{
+    background-color: #cfd1d4;
+}
+button[type="submitLoc"]
+{
+    background-color: #bebebe;
+    color: #000;
+}

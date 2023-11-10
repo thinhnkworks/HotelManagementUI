@@ -3,7 +3,7 @@ import './AddRoom.css';
 
 function AddRoomForm(props) {
   const [newRoom, setNewRoom] = useState({
-    maLoaiPhong: '',
+    maLoaiPhong: 1,
     trangThai: 0,
   });
 
@@ -25,61 +25,62 @@ function AddRoomForm(props) {
         });
   };
   const handleTrangThaisChange = (e) => {
-    const isReady = e.target.value === 0;
-    setNewRoom({ ...newRoom, trangThais: isReady });
+    const trangThaisValue = parseInt(e.target.value); // Chuyển giá trị sang số nguyên
+    setNewRoom({ ...newRoom, trangThai: trangThaisValue });
   };
 
 
   const handleSubmit = (e) => {
+    e.preventDefault();
   
     // Kiểm tra và hiển thị thông báo lỗi
     const validationErrors = validateInput(newRoom);
     setErrors(validationErrors);
-
+  
     if (Object.values(validationErrors).some((error) => error)) {
       alert("Vui lòng kiểm tra thông tin.");
       return;
     }
-
+  
     // Chuẩn bị dữ liệu cần gửi lên API
     const dataToSend = { ...newRoom };
-  console.log(JSON.stringify(dataToSend));
-    // Gửi dữ liệu khách hàng mới lên API
+  
     fetch('https://service-hotelmanagement-dev.azurewebsites.net/api/phongs', {
       method: 'POST',
-      mode: 'cors', // Đảm bảo mode là 'cors'
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(dataToSend),
-      
     })
-    
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
-        console.log(response)
         return response.json();
       })
       .then((data) => {
         console.log('Dữ liệu đã được gửi thành công:', data);
+  
+        // Update the state with the data returned from the API
+        setNewRoom(data); // Assuming the API response contains the updated room data
+  
         // Gọi hàm callback để thông báo cho component cha
-        props.onAddRoom(newRoom); // Pass the new listRooms data
+        props.onAddRoom(data);
         props.onCancel();
         // Có thể thêm xử lý khác sau khi gửi thành công
       })
       .catch((error) => {
         console.error('Lỗi khi gửi dữ liệu:', error);
-        // Hiển thị thông báo lỗi cho người dùng (hoặc xử lý lỗi theo cách phù hợp với ứng dụng của bạn)
       });
   };
+    
+  
 
 
   const validateInput = (listRooms) => {
     const errors = {
-      maLoaiPhong: '',
-      gia: '',
+      maLoaiPhong: ''
     };
   
     // Kiểm tra mã phòng
@@ -113,10 +114,10 @@ function AddRoomForm(props) {
               <label>Mã loại phòng</label><br/>
               <input type="text" id="maLoaiPhong" name="maLoaiPhong" placeholder='Nhập mã loại phòng' value={newRoom.maLoaiPhong} onChange={handleInputChange}/><br /><br />
               
-              <label for="trangThais">Trạng thái</label><br/>
-              <select name="trangThais" id="trangThais" value={newRoom.trangThais} onChange={handleTrangThaisChange}>
-        <option value={true}>Đã sẵn sàng</option>
-        <option value={false}>Chưa sẵn sàng</option>
+              <label for="trangThai">Trạng thái</label><br/>
+              <select name="trangThai" id="trangThai" value={newRoom.trangThai} onChange={handleTrangThaisChange}>
+        <option value={1}>Đã thuê</option>
+        <option value={0}>Còn trống</option>
       </select>
               {/* <input type="text" name="trangThai"  placeholder="Nhập trạng thái" value={newRoom.trangThai} onChange={handleInputChange} /><br /> */}
               <div className="error-message">{errors.trangThai}</div><br /><br />
