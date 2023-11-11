@@ -8,36 +8,28 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.08);
     z-index: 1;
   }
   
-  .form-container {
+  .formSurcharge .form-container {
     display: flex;
     background-color: white;
-    width: 90%;
-    height: 90%;
+    width: 40%;
+    height: 60%;
     align-items: center; /* Canh giữa theo chiều dọc */
     justify-content: center; /* Canh giữa theo chiều ngang */
     z-index: 2;
   }
   
-  .containerAddPersonnels {
-    display: grid;
+  .containerEditSurcharges {
+    display: block;
     background-color: #fff; /* Thay đổi màu nền thành #fff */
     justify-content: center; /* Canh giữa theo chiều ngang */
-    grid-template-columns: repeat(2, 1fr); /* Chia thành 2 cột đối xứng */
     grid-gap: 10px; /* Khoảng cách giữa các cột */
   }
-  .column-1 {
-    margin-right: 10px; /* Khoảng cách giữa hai cột */
-  }
-  
-  .column-2 {
-    margin-left: 10px; /* Khoảng cách giữa hai cột */
-  }
   /* CSS cho nút "Hủy" */
-  .containerAddPersonnels #cancel-button {
+  .containerEditSurcharges #cancel-button {
     background-color: #e7e9ee
     ; /* Màu nền cho nút "Hủy" */
     color: #000; /* Màu chữ trên nút "Hủy" */
@@ -46,12 +38,12 @@
   }
   
   /* CSS cho nút "Gửi" */
-  .containerAddPersonnels #submit-button {
+  .containerEditSurcharges #submit-button {
     background-color: #007bff; /* Màu nền cho nút "Gửi" */
     color: #fff; /* Màu chữ trên nút "Gửi" */
   }
   
-  .containerAddPersonnels input[type="submit"] {
+  .containerEditSurcharges input[type="submit"] {
     width:200px;
     background-color: #1570EF;
     color: white;
@@ -61,58 +53,34 @@
     margin-top: 10px; /* Thêm margin trên để tạo khoảng cách giữa cột và nút "Gửi" */
   }
   
-  .containerAddPersonnels input{
+.containerEditSurcharges input{
     width: 500px;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     margin-top: 6px;
-    margin-bottom: 6px;
+    margin-bottom: 16px;
   }
-  .containerAddPersonnels input[type="text"]{
+  .containerEditSurcharges input[type="text"]{
     border-radius: 15px;
   }
-  .containerAddPersonnels .button{
+  .containerEditSurcharges .button{
     width: 500px; 
     display: inline-flex;
     justify-content:right; /* Canh giữa theo chiều ngang */
   }
     
-
-  .containerAddPersonnels .matKhau{
-    padding-right: 30px;
-    position: relative;
-  }
-
-  .containerAddPersonnels .input-container {
-    position: relative;
-    width: 500px;
-    margin-bottom: 6px;
-  }
-  .input-container .eye-icon {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 25px;
-  }
-  #maNhanVien {
+  .containerEditSurcharges #maPP {
     background-color: #cecece;
   }
+  #maPP.editable
+   {
+    border-color: blue; /* Thay đổi màu khung input khi trong trạng thái chỉnh sửa */
+  }
+  
   .error-message{
     font-size:18px;
     color: red;
     font-family: 'Times New Roman', Times, serif;
-  }
-
-  .containerAddPersonnels select{
-    width: 500px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    box-sizing: border-box;
-    margin-top: 6px;
-    margin-bottom: 16px;
-  }
+  } 
