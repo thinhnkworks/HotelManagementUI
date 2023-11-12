@@ -165,8 +165,8 @@ const handleEditClick = () => {
                   <td>{d.maKH}</td>
                   <td>{d.maNV}</td>
                   <td>{d.soNgayO}</td>
-                  <td>{d.ngayNhanPhong}</td>
-                  <td>{d.ngayTraPhong}</td>
+                  <td>{new Date(d.ngayNhanPhong).toLocaleDateString()}</td>
+                  <td>{new Date(d.ngayTraPhong).toLocaleDateString()}</td>
                   <td id='removeData' onClick={() => handleDeleteClick(d)}> <AiTwotoneDelete/></td>
                   <td id='editData' onClick={() => {handleRowClick(d);console.log(editBookingsForm)}} > <BsThreeDotsVertical/></td>
                   <div> 

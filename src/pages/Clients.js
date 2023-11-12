@@ -190,16 +190,20 @@ const handleCheckCCCD = async () => {
 };
 
 
-  return (
+  return (  
     <div className='clients'>
       <p id='title'>Khách hàng</p>
       <div className='btn_FillAdd'>
 
 <br />
-<input type="text" name="cccd" placeholder="Nhập căn cước công dân " onChange={(e) => setCccdValue(e.target.value)} />
-<input type="submit" value="Kiểm tra" id="submit-button" onClick={handleCheckCCCD}/>
-        <button id='btn_themKH' type="submit" onClick={ShowAddClients}>Thêm khách hàng</button>
+<div className='checkCCCD' >
+  <input type="text"  name="cccd" placeholder="Nhập căn cước công dân " onChange={(e) => setCccdValue(e.target.value)} />
+  <input type="submit" value="Kiểm tra" id="submit-button" onClick={handleCheckCCCD}/>
+  <button id='btn_themKH' type="submit" onClick={ShowAddClients}>Thêm khách hàng</button>
         <button id='btn_loc' type='submitLoc'> <FiFilter /> Lọc</button>
+  </div>
+
+
         <div>{addClientsForm && <AddClientsForm onCancel={() => setAddClients(!addClientsForm)}  onAddClient={addClient}/>}</div>
       </div>
       {/* class Thêm khách hàng */}
@@ -225,7 +229,7 @@ const handleCheckCCCD = async () => {
                   <td>{d.maKH}</td>
                   <td>{d.hoTen}</td>
                   <td>{d.soLanNghi}</td>
-                  <td>{d.ngaySinh}</td>
+                  <td>{new Date(d.ngaySinh).toLocaleDateString()}</td>
                   <td>{d.gioiTinh}</td>
                   <td>{d.diaChi}</td>
                   <td>{d.sdt}</td>
