@@ -3,9 +3,11 @@ import { format } from 'date-fns';
 import './AddBookings.css';
 import AddServiceForm from './AddServiceSurcharge/AddService.js';
 import AddSurchargeForm from './AddServiceSurcharge/AddSurcharge.js';
+import ViewInfoForm from './ViewInfoRoom/ViewInfo.js';
 function EditBookingForm(props) {
   const [addServiceForm, setAddServices] = useState(false);
   const [addSurchargeForm, setAddSurcharges] = useState(false);
+  const [addViewInfoForm, setAddViewInfo] = useState(false);
 
   const formattedNgayNhanPhong = format(new Date(props.editData.ngayNhanPhong), 'yyyy-MM-dd');
   const formattedNgayTraPhong = format(new Date(props.editData.ngayTraPhong), 'yyyy-MM-dd');
@@ -16,7 +18,9 @@ function EditBookingForm(props) {
     const ShowAddSurcharges = () => {
     setAddSurcharges(!addSurchargeForm);
   };
-
+  const ShowViewInfo = () => {
+    setAddViewInfo(!addViewInfoForm);
+  };
 
 
   const [newBooking, setNewBooking] = useState({
@@ -132,6 +136,13 @@ function EditBookingForm(props) {
     ShowAddSurcharges();
     e.preventDefault();
   }
+  const handleViewInfo=(e)=>
+  {
+
+    ShowViewInfo();
+    e.preventDefault();
+  }
+
 
   return (
     <div className='formAddBooking'>
@@ -139,6 +150,7 @@ function EditBookingForm(props) {
         <div className="form-container">
         <div>{addServiceForm && <AddServiceForm maSKDP={props.editData.maSK} onCancel={() => setAddServices(!addServiceForm)} onco />}</div>
         <div>{addSurchargeForm && <AddSurchargeForm maSKDP={props.editData.maSK} onCancel={() => setAddSurcharges(!addSurchargeForm)} onco />}</div>
+        <div>{addViewInfoForm && <ViewInfoForm maKH={props.editData.maKH} maPhong={props.editData.maPhong} maSKDP={props.editData.maSK} onCancel={() => setAddViewInfo(!addViewInfoForm)} onco />}</div>
           <form className="containerAddBookings" >
             <div className="column-1">
               <label>Mã sự kiện</label><br/>
@@ -151,7 +163,7 @@ function EditBookingForm(props) {
               <div className="error-message">{errors.soNgayO}</div><br />
               <label>Ngày nhận phòng</label><br/>
               <input type="date" id="ngayNhanPhong" name="ngayNhanPhong" placeholder="Ngày nhận phòng" value={newBooking.ngayNhanPhong} onChange={handleInputChange}/><br />
-
+              <input type="submit" value="Xem thông tin" id="viewInfo-button" onClick={handleViewInfo}/>
             </div>
             <div className="column-2">
             <label>Mã phòng</label><br/>

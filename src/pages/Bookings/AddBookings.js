@@ -108,19 +108,16 @@ function AddBookingForm(props) {
       errors.maKH = "Vui lòng nhập mã KH là một số.";
     }
   
-    // Kiểm tra mã NV là số
+    // Kiểm tra mã NV là số`
     if (!Booking.maNV || isNaN(Booking.maNV)) {
       errors.maNV = "Vui lòng nhập mã NV là một số.";
     }
   
     // Kiểm tra số ngày ở và số ngày trả
     if (
-      !Booking.soNgayO ||
-      isNaN(Booking.soNgayO) ||
-      !Booking.ngayNhanPhong ||
-      !Booking.ngayTraPhong
+      !Booking.soNgayO || isNaN(Booking.soNgayO)
     ) {
-      errors.soNgayO = "Vui lòng nhập số ngày ở và ngày nhận/tra phòng.";
+      errors.soNgayO = "Vui lòng nhập số ngày ở đã đăng ký.";
     } else {
       const soNgayO = parseInt(Booking.soNgayO, 10);
       const ngayNhanPhong = new Date(Booking.ngayNhanPhong);
