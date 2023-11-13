@@ -36,20 +36,31 @@ function AddSurchargeForm(props) {
   const apiPhuPhis = 'https://service-hotelmanagement-dev.azurewebsites.net/api/phuphis';
 
   const fetchSurchargeData = () => {
-    fetch(apiPhuPhis)
-      .then((response) => {
+    const fetchDataWithAuthorization = async () => {
+      try {
+        const response = await fetch(apiPhuPhis, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            // Add your authorization token here, replace 'YOUR_TOKEN' with the actual token
+            'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+  
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
-        return response.json();
-      })
-      .then((data) => {
+  
+        const data = await response.json();
         setDataSurcharges(data.data);
         console.log(data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error fetching data:', error);
-      });
+      }
+    };
+  
+    // Call the function to fetch data
+    fetchDataWithAuthorization();
   };
 
   useEffect(() => {
@@ -101,6 +112,7 @@ function AddSurchargeForm(props) {
       mode: 'cors', // Đảm bảo mode là 'cors'
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(dataToSend),
       

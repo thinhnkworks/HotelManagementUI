@@ -46,6 +46,7 @@ function EditSurchargeForm(props) {
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(dataToSend),
       })

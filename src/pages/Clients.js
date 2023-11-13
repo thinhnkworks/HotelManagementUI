@@ -100,6 +100,11 @@ const handleRemoveClick = () => {
     // Thực hiện yêu cầu DELETE đến API
     fetch(`${apiKhachHangs}/${maKH}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        // Add your authorization token here, replace 'YOUR_TOKEN' with the actual token
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      }
     })
       .then((response) => {
         if (!response.ok) {
@@ -124,22 +129,35 @@ const handleRemoveClick = () => {
   
 };
 useEffect(() => {
-  // Fetch data from the API URL
-  fetch(apiKhachHangs)
-    .then((response) => {
+  // Function to fetch data with authorization
+  const fetchDataWithAuthorization = async () => {
+    try {
+      const response = await fetch(apiKhachHangs, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add your authorization token here, replace 'YOUR_TOKEN' with the actual token
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.status}`);
       }
-      return response.json();
-    })
-    .then((data) => {
+
+      const data = await response.json();
       setDataClients(data.data);
       console.log(data);
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error('Error fetching data:', error);
-    });
-}, [addClientsForm, selectedClient]);
+    }
+  };
+
+  // Call the function to fetch data
+  fetchDataWithAuthorization();
+
+  // The dependency array may need to include any variables used in the function
+}, [apiKhachHangs, addClientsForm, selectedClient]);
 
 
 const handleCheckCCCD = async () => {
@@ -156,6 +174,7 @@ const handleCheckCCCD = async () => {
       mode: 'cors', // Đảm bảo mode là 'cors'
       headers: {
         'Content-Type': 'application/json',
+        'Authorization':'Bearer'+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjE4IiwibmFtZWlkIjoiMTgiLCJDQ0NEIjoiMTExMTEyMjIyMjEyIiwibmFtZSI6IlRoYW5oIExvaSIsInN1YiI6IjExMTExMjIyMjIxMiIsImp0aSI6IjgzMTIyYjdjLTNlY2EtNGY2ZS05MTk4LTU1MjljNzAwOTM2MCIsImlhdCI6MTY5OTg2NjM2Mywicm9sZSI6InVzZXIiLCJuYmYiOjE2OTk4NjYzNjMsImV4cCI6MTY5OTg2OTk2M30.GjfEPw70FLWFCttejmrzOUy_rVBnxWXDRon_YkvJU8s',
       },
     });
 

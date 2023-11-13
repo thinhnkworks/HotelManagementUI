@@ -73,6 +73,11 @@ const handleRemoveClick = () => {
     // Thực hiện yêu cầu DELETE đến API
     fetch(`${apiDatPhongs}/${MaSK}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        // Add your authorization token here, replace 'YOUR_TOKEN' with the actual token
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      }
     })
       .then((response) => {
         if (!response.ok) {
@@ -118,23 +123,36 @@ const handleEditClick = () => {
 };
 
 
-  useEffect(() => {
-    // Fetch data from the API URL
-    fetch(apiDatPhongs)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setDataBookings(data.data);
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
+useEffect(() => {
+  // Fetch data from the API URL
+  const fetchDataWithAuthorization = async () => {
+    try {
+      const response = await fetch(apiDatPhongs, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add your authorization token here, replace 'YOUR_TOKEN' with the actual token
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+        },
       });
-  }, [addBookingsForm,selectedBooking]);
+
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setDataBookings(data.data);
+      console.log(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  fetchDataWithAuthorization();  // Call the function to initiate the fetch
+
+}, [addBookingsForm, selectedBooking]);
+
+  
   return (
     <div className='bookings'>
       <p id='title'>Phụ phí</p>
