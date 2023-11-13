@@ -97,6 +97,11 @@ const handleRemoveClick = () => {
     // Thực hiện yêu cầu DELETE đến API
     fetch(`${apiNhanViens}/${maNV}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        // Add your authorization token here, replace 'YOUR_TOKEN' with the actual token
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      }
     })
       .then((response) => {
         if (!response.ok) {
@@ -122,20 +127,31 @@ const handleRemoveClick = () => {
 };
 useEffect(() => {
   // Fetch data from the API URL
-  fetch(apiNhanViens)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.status}`);
+    // Fetch data from the API URL
+    const fetchDataWithAuthorization = async () => {
+      try {
+        const response = await fetch(apiNhanViens, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            // Add your authorization token here, replace 'YOUR_TOKEN' with the actual token
+            'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        setDataPersonnels(data.data);
+        console.log(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-      return response.json();
-    })
-    .then((data) => {
-      setDataPersonnels(data.data);
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error('Error fetching data:', error);
-    });
+    };
+  
+    fetchDataWithAuthorization();  // Call the function to initiate the fetch
 }, [addPersonnelsForm, selectedPersonnel]);
 
 

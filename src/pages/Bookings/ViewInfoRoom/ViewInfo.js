@@ -30,6 +30,7 @@ function ViewInfoForm(props) {
           mode: 'cors',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -56,7 +57,6 @@ function ViewInfoForm(props) {
 
     } catch (error) {
       console.error('Error:', error);
-      alert('Khách hàng trên chưa có trong hệ thống.');
     }
   };
 
@@ -69,6 +69,7 @@ function ViewInfoForm(props) {
           mode: 'cors',
           headers: {
             'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -90,7 +91,6 @@ function ViewInfoForm(props) {
 
     } catch (error) {
       console.error('Error:', error);
-      alert('Khách hàng trên chưa có trong hệ thống.');
     }
   };
 

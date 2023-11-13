@@ -66,6 +66,7 @@ function AddPersonnelsForm(props) {
       mode: 'cors', // Đảm bảo mode là 'cors'
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(dataToSend),
       

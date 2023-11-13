@@ -146,6 +146,11 @@ const handleRemoveClick = () => {
     // Thực hiện yêu cầu DELETE đến API
     fetch(`https://service-hotelmanagement-dev.azurewebsites.net/api/phongs/${maPhong}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        // Add your authorization token here, replace 'YOUR_TOKEN' with the actual token
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+      }
     })
       .then((response) => {
         if (!response.ok) {
@@ -193,20 +198,31 @@ const handleEditClick = () => {
 
   useEffect(() => {
     // Fetch data from the API URL
-    fetch(apiDSPhongs)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setDataListRooms(data.data);
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
+        // Fetch data from the API URL
+  const fetchDataWithAuthorization = async () => {
+    try {
+      const response = await fetch(apiDSPhongs, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add your authorization token here, replace 'YOUR_TOKEN' with the actual token
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+        },
       });
+
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setDataListRooms(data.data);
+      console.log(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  fetchDataWithAuthorization();  // Call the function to initiate the fetch
   }, [addRoomsForm,selectedRoom]);
   return (
     <div className='surcharges'>
