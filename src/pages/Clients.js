@@ -174,7 +174,7 @@ const handleCheckCCCD = async () => {
       mode: 'cors', // Đảm bảo mode là 'cors'
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':'Bearer'+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjE4IiwibmFtZWlkIjoiMTgiLCJDQ0NEIjoiMTExMTEyMjIyMjEyIiwibmFtZSI6IlRoYW5oIExvaSIsInN1YiI6IjExMTExMjIyMjIxMiIsImp0aSI6IjgzMTIyYjdjLTNlY2EtNGY2ZS05MTk4LTU1MjljNzAwOTM2MCIsImlhdCI6MTY5OTg2NjM2Mywicm9sZSI6InVzZXIiLCJuYmYiOjE2OTk4NjYzNjMsImV4cCI6MTY5OTg2OTk2M30.GjfEPw70FLWFCttejmrzOUy_rVBnxWXDRon_YkvJU8s',
+        'Authorization': `Bearer ${localStorage.getItem("token")}`,
       },
     });
 
