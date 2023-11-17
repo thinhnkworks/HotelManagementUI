@@ -6,9 +6,7 @@
     align-items: start; /* Căn chỉnh phía trên của cả hai cột */
     position: relative; /* Đặt position thành relative để tạo không gian cho position absolute của nút Hủy */
   }
-  .formInvoiceDetails .Info{
-    display: inline-block;
-  }
+  
   .formInvoiceDetails .tableServices,
   .formInvoiceDetails .tableSurcharges {
     margin-top: 90px;
@@ -43,7 +41,7 @@
     bottom: 0;
     margin: 10px; /* Khoảng cách từ mép dưới và mép phải của form-container */
   }
-
+  
   #cancel-button {
     /* Các kiểu dáng cho nút Hủy */
     background-color: #e7e9ee;

@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './InvoiceDetails.css';
+import DeleteClientForm from '../DeleteBookings.js';
+import { AiTwotoneDelete } from 'react-icons/ai';
+
 
 function InvoiceDetails(props) {
   const [dataServices, setDataServices] = useState([]);
   const [dataSurcharges, setDataSurcharges] = useState([]);
-  const [isPrinting, setIsPrinting] = useState(false);
 
   const apiDichVus = 'https://service-hotelmanagement-dev.azurewebsites.net/api/ThemDichVus';
   const apiSurcharges = 'https://service-hotelmanagement-dev.azurewebsites.net/api/ThemPhuPhis';
 
   const fetchDataWithAuthorization = async (api, setData) => {
-    const maSKThuePhong = props.editData.maSKThuePhong;
+    const maSKThuePhong = props.maSKDP;
     try {
       const response = await fetch(`${api}?MaSKDP=${maSKThuePhong}`, {
         method: 'GET',
@@ -32,6 +34,71 @@ function InvoiceDetails(props) {
     }
   };
 
+  //=============DELETE=================
+  const [dataToDelete, setDataToDelete] = useState(null);
+  const [deleteDataClick, setDeleteDataClick] = useState(false);
+  const [typeToDelete,setTypeToDelete]=useState(null);
+
+
+
+  const handleDeleteClick = (data, type) => {
+    setDataToDelete(data);
+    // Set deleteService based on the provided type
+    setDeleteDataClick(type === 'services');
+  };
+  
+  
+  const handleCancelDelete = () => {
+    setDataToDelete(null);
+    setDeleteDataClick(false);
+  };
+  
+  const handleRemoveClick = () => {
+    if (dataToDelete) {
+      const maSK = dataToDelete.maSK;
+      console.log(maSK);
+      const apiUrl = typeToDelete ? apiDichVus : apiSurcharges;
+      console.log(`${apiUrl}/${maSK}`);
+      // Tìm vị trí của phần tử cần xóa trong mảng dataServices hoặc dataSurcharges
+      const indexToRemove = deleteDataClick
+        ? dataServices.findIndex((service) => service.maSK === maSK)
+        : dataSurcharges.findIndex((surcharge) => surcharge.maSK === maSK);
+  
+      if (indexToRemove !== -1) {
+        // Thực hiện yêu cầu DELETE đến API
+        fetch(`${apiUrl}/${maSK}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          }
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Network response was not ok: ${response.status}`);
+            }
+  
+            // Xóa phần tử khỏi mảng dataServices hoặc dataSurcharges sau khi xóa thành công trên API
+            const newData = deleteDataClick
+              ? [...dataServices]
+              : [...dataSurcharges];
+  
+            newData.splice(indexToRemove, 1);
+  
+            // Cập nhật danh sách dữ liệu
+            deleteDataClick
+              ? setDataServices(newData)
+              : setDataSurcharges(newData);
+          })
+          .catch((error) => {
+            console.error('Error deleting data:', error);
+          });
+  
+        // Đóng Form Hủy
+        handleCancelDelete();
+      }
+    }
+  };
   
   
 
@@ -55,48 +122,12 @@ function InvoiceDetails(props) {
   };
 
 
-  const handlePrint = () => {
-    // Thiết lập trạng thái đang in thành true khi bắt đầu in
-    setIsPrinting((prevIsPrinting) => !prevIsPrinting);
-  
-    // Mô phỏng một số công việc in cần thực hiện
-    // Trong thực tế, bạn có thể muốn thực hiện các công việc in thực sự ở đây
-  
-    // Đợi cập nhật state hoàn tất, sau đó chạy window.print()
-    setTimeout(() => {
-      window.print();
-  
-      // Sau khi in xong, đặt trạng thái đang in lại thành false
-      setIsPrinting((prevIsPrinting) => !prevIsPrinting);
-    }, 0);
-  };
-
-
   return (
     <div>
       <div className="formInvoiceDetails">
         <div className="overlay">
           <div className="form-container">
-
             <div className="tableServices">
-            <h1 style={{ color: 'rgb(255, 0, 0)' }}><strong>Hóa đơn</strong></h1>
-            <br/>
-            <label>Mã hóa đơn:{props.editData.maHD}</label>
-
-            <br/>
-            <br/>
-
-            <h3>Thông tin cá nhân</h3>
-            <br/>
-            <label>Họ và tên khách hàng : {props.editData.hoTenKhachHang}</label>
-            <br/>
-            <br/>
-            <label>Ngày nhận phòng : {new Date(props.editData.ngayCheckIn).toLocaleDateString()}</label>
-            <br/>
-            <br/>
-            <label>Ngày trả phòng : {new Date(props.editData.ngayCheckOut).toLocaleDateString()}</label>
-            <br/>
-            <br/>
               <label><strong>Danh sách dịch vụ</strong></label>
               <table>
                 <thead>
@@ -118,6 +149,7 @@ function InvoiceDetails(props) {
                       <td>{d.soLuong}</td>
                       <td>{d.tongTien}</td>
                       <td>{d.thoiGian}</td>
+                      <td id='removeData' onClick={() => { handleDeleteClick(d, 'services'); setTypeToDelete(true); }}><AiTwotoneDelete /></td>
 
             </tr>
                   ))}
@@ -126,24 +158,6 @@ function InvoiceDetails(props) {
             </div>
 
             <div className="tableSurcharges">
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-            <h3>Thông tin phòng</h3>
-            <br/>
-            <label>Họ tên nhân viên đăng ký : {props.editData.hoTenNhanVien}</label>
-            <br/>
-            <br/>
-            <label>Tên phòng : {props.editData.tenPhong}</label>
-            <br/>
-            <br/>
-            <label>Trị giá hóa đơn : {props.editData.triGiaDonHang.toLocaleString()}  VNĐ</label>
-            <br/>
-            <br/>
-            
-
               <label><strong>Danh sách phụ phí</strong></label>
               <table>
                 <thead>
@@ -165,32 +179,27 @@ function InvoiceDetails(props) {
                       <td>{d.soLuong}</td>
                       <td>{d.tongTien}</td>
                       <td>{d.thoiGian}</td>
+                      <td id='removeData' onClick={() => { handleDeleteClick(d, 'surcharges'); setTypeToDelete(false); }}><AiTwotoneDelete /></td>
 
 
                     </tr>
                   ))}
                 </tbody>
               </table>
-
-            </div>
-            <div>
-              <h2 style={{ color: '#007bff' }}>Khách sạn NOVOLTEL</h2>
-              <br/>
-              <label>Địa chỉ: Số 1, Đường ABC, Phường Hiệp phú,Thành phố Thủ Đức, Việt Nam</label>
-              <br/>
-              <label style={{ color: 'rgb(255, 0, 0)' }}>Hotline: 0123456789</label>
-
+                        <div>
+                        {dataToDelete && (
+  <DeleteClientForm
+    onCancel={handleCancelDelete}
+    onConfirm={handleRemoveClick}
+    typeToDelete={typeToDelete}
+  />
+)}
+          </div>
             </div>
             <div className="button">
-              {!isPrinting && (
-        <input type="submit" value="Thoát" id="cancel-button" onClick={handleCancelClick} />
-        )}
+              <input type="submit" value="Thoát" id="cancel-button" onClick={handleCancelClick} />
 
-        {!isPrinting && (
-          <input type="submit" value="In" id="cancel-button" onClick={handlePrint} />
-        )}
-
-      </div>
+            </div>
           </div>
         </div>
       </div>
