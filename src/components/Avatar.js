@@ -84,11 +84,11 @@ function Avatar(props) {
       <div className="formViewInfo">
         <div className="overlay">
           <div className="form-container">
-            <form className="containerEditSurcharges">  
+            <form className="containerEditSurcharges">
               <div className="infoClient">
                 <div className="column-1">
                   <label><strong>Nhân viên</strong></label><br /><br /><br />
-                  <label>Mã nhân viên </label><br />
+                  <label>Mã nhân viên</label><br />
                   <input type="text" id='maNV' name="maNV" disabled value={newInfo.maNV} /><br />
                   <label>Họ tên</label><br />
                   <input type="text" name="hoTen" disabled value={newInfo.hoTen} /><br />
