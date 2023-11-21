@@ -8,7 +8,7 @@ function InvoiceDetails(props) {
 
   const apiDichVus = 'https://service-hotelmanagement-dev.azurewebsites.net/api/ThemDichVus';
   const apiSurcharges = 'https://service-hotelmanagement-dev.azurewebsites.net/api/ThemPhuPhis';
-
+  const apiHoaDons=`https://service-hotelmanagement-dev.azurewebsites.net/api/HoaDon`;
   const fetchDataWithAuthorization = async (api, setData) => {
     const maSKThuePhong = props.editData.maSKThuePhong;
     try {
@@ -53,12 +53,36 @@ function InvoiceDetails(props) {
   const handleCancelClick = () => {
     props.onCancel();
   };
-
+  const handlePrintInvoice=()=>{
+      console.log('Đang xuất hóa đơn')
+      // Gửi dữ liệu khách hàng mới lên API
+      fetch(`${apiHoaDons}/${props.editData.maHD}?check=true`, {
+          method: 'GET',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+          } else if (response.status === 204) {
+            console.log('Đã xuất hóa đơn');
+            props.onConfirm();
+            // Có thể thực hiện xử lý khác sau khi gửi thành công
+          }
+        })
+        .catch((error) => {
+          console.error('Lỗi khi gửi dữ liệu:', error);
+          // Xử lý lỗi khi gửi yêu cầu
+        });
+  }
 
   const handlePrint = () => {
     // Thiết lập trạng thái đang in thành true khi bắt đầu in
     setIsPrinting((prevIsPrinting) => !prevIsPrinting);
-  
+    handlePrintInvoice();
     // Mô phỏng một số công việc in cần thực hiện
     // Trong thực tế, bạn có thể muốn thực hiện các công việc in thực sự ở đây
   
@@ -69,6 +93,8 @@ function InvoiceDetails(props) {
       // Sau khi in xong, đặt trạng thái đang in lại thành false
       setIsPrinting((prevIsPrinting) => !prevIsPrinting);
     }, 0);
+
+    
   };
 
 

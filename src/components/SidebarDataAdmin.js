@@ -53,10 +53,10 @@ export const SidebarDataAdmin = [
     icon: <FaIcons.FaPeopleGroup />,
     cName: 'nav-text'
   },
-  {
-    title: 'Doanh thu',
-    path: '/sales',
-    icon: <MdIcons.MdOutlineRequestPage />,
-    cName: 'nav-text'
-  }
+  // {
+  //   title: 'Doanh thu',
+  //   path: '/sales',
+  //   icon: <MdIcons.MdOutlineRequestPage />,
+  //   cName: 'nav-text'
+  // }
 ];
