@@ -15,6 +15,18 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
+    title: 'Khách hàng',
+    path: '/clients',
+    icon: <Io5Icons.IoPeopleOutline />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Danh sách phòng',
+    path: '/listRooms',
+    icon: <BsIcons.BsListTask />,
+    cName: 'nav-text'
+  },
+  {
     title: 'Đặt phòng',
     path: '/booking',
     icon: <BsIcons.BsPencilSquare />,
@@ -26,12 +38,7 @@ export const SidebarData = [
     icon: <LiaIcons.LiaFileInvoiceDollarSolid />,
     cName: 'nav-text'
   },
-  {
-    title: 'Danh sách phòng',
-    path: '/listRooms',
-    icon: <BsIcons.BsListTask />,
-    cName: 'nav-text'
-  },
+
   {
     title: 'Dịch vụ',
     path: '/services',
@@ -44,10 +51,5 @@ export const SidebarData = [
     icon: <RiIcons.RiMoneyDollarCircleLine />,
     cName: 'nav-text'
   },
-  {
-    title: 'Khách hàng',
-    path: '/clients',
-    icon: <Io5Icons.IoPeopleOutline />,
-    cName: 'nav-text'
-  }
+
 ];

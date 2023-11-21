@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './css/Surcharges.css';
-import AddServiceForm from './Services/AddServices.js';
-import DeleteServicesForm from './Services/DeleteServices.js';
-import EditServicesForm from './Services/EditServices.js';
-import { FiFilter } from 'react-icons/fi';
+
+import DeleteInvoicesForm from './Services/DeleteServices.js';
+import EditInvoicesForm from './Invoices/InvoiceDetails.js';
 import {BsThreeDotsVertical} from 'react-icons/bs';
 import {AiTwotoneDelete} from 'react-icons/ai';
 
 
-function Service() {
-  const [dataServices, setDataServices] = useState([]);
+function Invoice() {
+  const [dataInvoices, setDataInvoices] = useState([]);
   const apiHoaDons="https://service-hotelmanagement-dev.azurewebsites.net/api/hoadon";
 
-  // Function to add a new service
-  const addService = (newService) => {
-    // Add the new service to the dataServices state
-    setDataServices((prevData) => [...prevData, newService]);
-  };
+  // Function to add a new invoice
+
 
 
   //*******************------------------ */ [] để đảm bảo sẽ chạy chỉ một lần sau khi nạp trang
@@ -24,8 +20,8 @@ function Service() {
   const recordsPerPage = 5;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
-  const records = dataServices.slice(firstIndex, lastIndex);
-  const npage = Math.ceil(dataServices.length / recordsPerPage);
+  const records = dataInvoices.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(dataInvoices.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
 
   const prevPage = () => {
@@ -45,34 +41,33 @@ function Service() {
   }
 
   // ******************-------------------------------Form AddClient
-const [addServicesForm, setAddServices] = useState(false);
-const ShowAddServices = () => setAddServices(!addServicesForm);
+
 
   
 //**********************----------------------Form DeleteClient
-const [serviceToDelete, setServiceToDelete] = useState(null);
+const [invoiceToDelete, setInvoiceToDelete] = useState(null);
 
-const [deleteServices, setDeleteServices] = useState(false);
-const ShowDeleteService = () => setDeleteServices(!deleteServices);
+const [deleteInvoices, setDeleteInvoices] = useState(false);
+const ShowDeleteInvoice = () => setDeleteInvoices(!deleteInvoices);
 
 
-  const handleDeleteClick = (service) => {
-    setServiceToDelete(service);
-  ShowDeleteService(true);
+  const handleDeleteClick = (invoice) => {
+    setInvoiceToDelete(invoice);
+  ShowDeleteInvoice(true);
   };
   const handleCancelDelete = () => {
-    ShowDeleteService(false);
+    ShowDeleteInvoice(false);
   };
 
 const handleRemoveClick = () => {
-  if (serviceToDelete) {
-    const maDV = serviceToDelete.maDV;
-    // Tìm vị trí của phần tử cần xóa trong mảng dataServices
-  const indexToRemove = dataServices.findIndex((service) => service.maDV === maDV);
+  if (invoiceToDelete) {
+    const maHD = invoiceToDelete.maHD;
+    // Tìm vị trí của phần tử cần xóa trong mảng dataInvoices
+  const indexToRemove = dataInvoices.findIndex((invoice) => invoice.maHD === maHD);
 
   if (indexToRemove !== -1) {
     // Thực hiện yêu cầu DELETE đến API
-    fetch(`${apiHoaDons}/${maDV}`, {
+    fetch(`${apiHoaDons}/${maHD}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -85,42 +80,42 @@ const handleRemoveClick = () => {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
 
-        // Xóa phần tử khỏi mảng dataServices sau khi xóa thành công trên API
-        const newDataServices = [...dataServices];
-        newDataServices.splice(indexToRemove, 1);
+        // Xóa phần tử khỏi mảng dataInvoices sau khi xóa thành công trên API
+        const newDataInvoices = [...dataInvoices];
+        newDataInvoices.splice(indexToRemove, 1);
 
         // Cập nhật danh sách dữ liệu
-        setDataServices(newDataServices);
+        setDataInvoices(newDataInvoices);
       })
       .catch((error) => {
         console.error('Error deleting data:', error);
       });
 
     // Đóng Form Hủy
-    ShowDeleteService(false);
+    ShowDeleteInvoice(false);
   }
   }
   
 };
 
 //********************-------------------------From EditClient
-const [selectedService, setSelectedService] = useState(null);
+const [selectedInvoice, setSelectedInvoice] = useState(null);
 
 
-const [editServicesForm, setEditServices] = useState(false);
-const ShowEditService = () => setEditServices(!editServicesForm);
+const [editInvoicesForm, setEditInvoices] = useState(false);
+const ShowEditInvoice = () => setEditInvoices(!editInvoicesForm);
 
-const handleRowClick = (service) => {
-  setSelectedService(service);
-  console.log(service);
-  ShowEditService(true);
+const handleRowClick = (invoice) => {
+  setSelectedInvoice(invoice);
+  console.log(invoice);
+  ShowEditInvoice(true);
 };
 
 
 const handleEditClick = () => {
   // Tìm vị trí của phần tử cần sửa trong mảng dataClients
-    setEditServices(!editServicesForm);
-    setSelectedService(null);
+    setEditInvoices(!editInvoicesForm);
+    setSelectedInvoice(null);
 };
 
 
@@ -142,7 +137,7 @@ const handleEditClick = () => {
       }
 
       const data = await response.json();
-      setDataServices(data.data);
+      setDataInvoices(data.data);
       console.log(data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -150,14 +145,13 @@ const handleEditClick = () => {
   };
 
   fetchDataWithAuthorization();  // Call the function to initiate the fetch
-  }, [addServicesForm,selectedService]);
+  }, [selectedInvoice]);
   return (
     <div className='surcharges'>
       <p id='title'>Hóa đơn</p><br/>
       <div className='btn_FillAdd'>
-        {/* <button id='btn_themPP' type="submit" onClick={ShowAddServices}>Thêm dịch vụ</button>
+        {/* <button id='btn_themPP' type="submit" onClick={ShowAddInvoices}>Thêm dịch vụ</button>
         <button id='btn_loc' type='submitLoc'> <FiFilter /> Lọc</button> */}
-        <div>{addServicesForm && <AddServiceForm onCancel={() => setAddServices(!addServicesForm)}  onAddService={addService}/>}</div>
       </div>
       {/* class Thêm khách hàng */}
       <div className='tableThemKH'>
@@ -166,6 +160,7 @@ const handleEditClick = () => {
             <thead>
               <tr>
                 <th>Mã hóa đơn</th>
+                <th>Mã sự kiện thuê</th>
                 <th>Tên khách hàng</th>
                 <th>Tên nhân viên</th>
                 <th>Tên phòng</th>
@@ -179,6 +174,7 @@ const handleEditClick = () => {
               {records.map((d, i) => (
                 <tr key={i}>
                   <td>{d.maHD}</td>
+                  <td>{d.maSKThuePhong}</td>
                   <td>{d.hoTenKhachHang}</td>
                   <td>{d.hoTenNhanVien}</td>
                   <td>{d.tenPhong}</td>
@@ -186,17 +182,17 @@ const handleEditClick = () => {
                   <td>{new Date(d.ngayCheckOut).toLocaleDateString()}</td>
                   <td>{d.triGiaDonHang}</td>
                   <td>{d.tinhTrang}</td>
-                  <td id='removeData' onClick={() => handleDeleteClick(d)}> <AiTwotoneDelete/></td>
-                  <td id='editData' onClick={() => {handleRowClick(d);console.log(editServicesForm)}} > <BsThreeDotsVertical/></td>
+                  {/* <td id='removeData' onClick={() => handleDeleteClick(d)}> <AiTwotoneDelete/></td> */}
+                  <td id='editData' onClick={() => {handleRowClick(d);console.log(editInvoicesForm)}} > <BsThreeDotsVertical/></td>
                   <div> 
-                  {deleteServices && (
-        <DeleteServicesForm onCancel={handleCancelDelete} onConfirm={() => handleRemoveClick(d.maDV) }  serviceToDelete={serviceToDelete}/>)}
+                  {deleteInvoices && (
+        <DeleteInvoicesForm onCancel={handleCancelDelete} onConfirm={() => handleRemoveClick(d.maHD) }  invoiceToDelete={invoiceToDelete}/>)}
                   </div>
                   <div>
-                    {editServicesForm && (<EditServicesForm onCancel={() => {setEditServices(!editServicesForm); setSelectedService(null);console.log(editServicesForm)}}
+                    {editInvoicesForm && (<EditInvoicesForm onCancel={() => {setEditInvoices(!editInvoicesForm); setSelectedInvoice(null);console.log(editInvoicesForm)}}
                                         editData={{
-                                          maDV: selectedService.maDV,
-                                          ...selectedService,
+                                          maHD: selectedInvoice.maHD,
+                                          ...selectedInvoice,
                                         }}
                                         onConfirm={() => handleEditClick()}
 />
@@ -230,4 +226,4 @@ const handleEditClick = () => {
 }
 
 
-export default Service;
+export default Invoice;

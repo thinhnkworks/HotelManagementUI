@@ -184,7 +184,7 @@ useEffect(() => {
                 <tr key={i}>
                   <td>{d.maNV}</td>
                   <td>{d.hoTen}</td>
-                  <td>{d.ngaySinh}</td>
+                  <td>{new Date(d.ngaySinh).toLocaleDateString()}</td>
                   <td>{d.gioiTinh}</td>
                   <td>{d.diaChi}</td>
                   <td>{d.sdt}</td>

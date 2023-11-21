@@ -107,7 +107,7 @@ function AddSurchargeForm(props) {
     const dataToSend = { ...newSurcharge };
   console.log(JSON.stringify(dataToSend));
     // Gửi dữ liệu khách hàng mới lên API
-    fetch('https://Surcharge-hotelmanagement-dev.azurewebsites.net/api/ThemPhuPhis', {
+    fetch('https://service-hotelmanagement-dev.azurewebsites.net/api/ThemPhuPhis', {
       method: 'POST',
       mode: 'cors', // Đảm bảo mode là 'cors'
       headers: {
@@ -133,6 +133,7 @@ function AddSurchargeForm(props) {
         // Có thể thêm xử lý khác sau khi gửi thành công
       })
       .catch((error) => {
+        console.log(dataToSend)
         console.error('Lỗi khi gửi dữ liệu:', error);
         // Hiển thị thông báo lỗi cho người dùng (hoặc xử lý lỗi theo cách phù hợp với ứng dụng của bạn)
       });

@@ -4,10 +4,28 @@ import './AddBookings.css';
 import AddServiceForm from './AddServiceSurcharge/AddService.js';
 import AddSurchargeForm from './AddServiceSurcharge/AddSurcharge.js';
 import ViewInfoForm from './ViewInfoRoom/ViewInfo.js';
+import EditInvoicesForm from './ViewInfoRoom/InvoiceDetails.js';
 function EditBookingForm(props) {
   const [addServiceForm, setAddServices] = useState(false);
   const [addSurchargeForm, setAddSurcharges] = useState(false);
   const [addViewInfoForm, setAddViewInfo] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
+
+
+  const [editInvoicesForm, setEditInvoices] = useState(false);
+  const ShowEditInvoice = () => setEditInvoices(!editInvoicesForm);
+  
+  const handleRowClick = (invoice) => {
+    setSelectedInvoice(invoice);
+    console.log(invoice);
+    ShowEditInvoice(true);
+  };
+  const handleEditClick = () => {
+    // Tìm vị trí của phần tử cần sửa trong mảng dataClients
+      setEditInvoices(!editInvoicesForm);
+      setSelectedInvoice(null);
+  };
+  
 
   const formattedNgayNhanPhong = format(new Date(props.editData.ngayNhanPhong), 'yyyy-MM-dd');
   const formattedNgayTraPhong = format(new Date(props.editData.ngayTraPhong), 'yyyy-MM-dd');
@@ -143,6 +161,12 @@ function EditBookingForm(props) {
     ShowViewInfo();
     e.preventDefault();
   }
+  const handleViewServiceSurcharge=(e)=>
+  {
+
+    ShowEditInvoice();
+    e.preventDefault();
+  }
 
 
   return (
@@ -152,6 +176,13 @@ function EditBookingForm(props) {
         <div>{addServiceForm && <AddServiceForm maSKDP={props.editData.maSK} onCancel={() => setAddServices(!addServiceForm)} onco />}</div>
         <div>{addSurchargeForm && <AddSurchargeForm maSKDP={props.editData.maSK} onCancel={() => setAddSurcharges(!addSurchargeForm)} onco />}</div>
         <div>{addViewInfoForm && <ViewInfoForm maKH={props.editData.maKH} maPhong={props.editData.maPhong} maSKDP={props.editData.maSK} onCancel={() => setAddViewInfo(!addViewInfoForm)} onco />}</div>
+        <div>
+                    {editInvoicesForm && (<EditInvoicesForm onCancel={() => {setEditInvoices(!editInvoicesForm); setSelectedInvoice(null);console.log(editInvoicesForm)}}
+                                        maSKDP={props.editData.maSK}
+                                        onConfirm={() => handleEditClick()}
+/>
+                                      )}
+                  </div>
           <form className="containerAddBookings" >
             <div className="column-1">
               <label>Mã sự kiện</label><br/>
@@ -165,6 +196,7 @@ function EditBookingForm(props) {
               <label>Ngày nhận phòng</label><br/>
               <input type="date" id="ngayNhanPhong" name="ngayNhanPhong" placeholder="Ngày nhận phòng" value={newBooking.ngayNhanPhong} onChange={handleInputChange}/><br />
               <input type="submit" value="Xem thông tin" id="viewInfo-button" onClick={handleViewInfo}/>
+              <input type="submit" value="Xem dịch vụ và phụ phí" id="viewInfo-button" onClick={handleViewServiceSurcharge}/>
             </div>
             <div className="column-2">
             <label>Mã phòng</label><br/>

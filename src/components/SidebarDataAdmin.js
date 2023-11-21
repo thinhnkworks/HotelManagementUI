@@ -16,9 +16,9 @@ export const SidebarDataAdmin = [
     cName: 'nav-text'
   },
   {
-    title: 'Hóa đơn',
-    path: '/invoices',
-    icon: <LiaIcons.LiaFileInvoiceDollarSolid />,
+    title: 'Khách hàng',
+    path: '/clients',
+    icon: <Io5Icons.IoPeopleOutline />,
     cName: 'nav-text'
   },
   {
@@ -27,6 +27,13 @@ export const SidebarDataAdmin = [
     icon: <BsIcons.BsListTask />,
     cName: 'nav-text'
   },
+  {
+    title: 'Hóa đơn',
+    path: '/invoices',
+    icon: <LiaIcons.LiaFileInvoiceDollarSolid />,
+    cName: 'nav-text'
+  },
+
   {
     title: 'Dịch vụ',
     path: '/services',
@@ -39,22 +46,17 @@ export const SidebarDataAdmin = [
     icon: <RiIcons.RiMoneyDollarCircleLine />,
     cName: 'nav-text'
   },
-  {
-    title: 'Khách hàng',
-    path: '/clients',
-    icon: <Io5Icons.IoPeopleOutline />,
-    cName: 'nav-text'
-  },
+
   {
     title: 'Nhân viên',
     path: '/personnels',
     icon: <FaIcons.FaPeopleGroup />,
     cName: 'nav-text'
   },
-  {
-    title: 'Doanh thu',
-    path: '/sales',
-    icon: <MdIcons.MdOutlineRequestPage />,
-    cName: 'nav-text'
-  }
+  // {
+  //   title: 'Doanh thu',
+  //   path: '/sales',
+  //   icon: <MdIcons.MdOutlineRequestPage />,
+  //   cName: 'nav-text'
+  // }
 ];
