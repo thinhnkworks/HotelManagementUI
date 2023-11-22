@@ -44,9 +44,9 @@ function EditPersonnelsForm(props) {
     // Kiểm tra và hiển thị thông báo lỗi
     const validationErrors = validateInput(newPersonnel);
     setErrors(validationErrors);
-
     if (Object.values(validationErrors).some((error) => error)) {
       alert("Vui lòng kiểm tra thông tin.");
+      console.log(validationErrors)
       return;
     }
 
@@ -62,8 +62,10 @@ function EditPersonnelsForm(props) {
         'Authorization': `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(dataToSend),
+
     })
     .then((response) => {
+      console.log(dataToSend);
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.status}`);
       } else if (response.status === 204) {
@@ -76,7 +78,7 @@ function EditPersonnelsForm(props) {
       console.error('Lỗi khi gửi dữ liệu:', error);
       // Xử lý lỗi khi gửi yêu cầu
     });
-
+      console.log(dataToSend);
   };
 
 
@@ -112,9 +114,7 @@ function EditPersonnelsForm(props) {
         if (personnel.Cccd && !personnel.Cccd.match(/^\d{12}$/)) {
           errors.Cccd = "CCCD không hợp lệ. Phải có đúng 12 chữ số.";
         }
-        if (typeof personnel.quanLy !== "boolean") {
-            errors.quanLy = "Trường quanLy phải là kiểu boolean (true hoặc false).";
-          }
+
         
         
       

@@ -113,7 +113,6 @@ function EditRoomForm(props) {
         <option value={1}>Đã thuê</option>
         <option value={0}>Còn trống</option>
       </select>
-              {/* <input type="text" name="trangThai"  placeholder="Nhập trạng thái" value={newRoom.trangThai} onChange={handleInputChange} /><br /> */}
               <div className="error-message">{errors.trangThai}</div><br /><br />
               <div className="button ">
               <input type="submit" value="Hủy" id="cancel-button" onClick={handleCancelClick} />
