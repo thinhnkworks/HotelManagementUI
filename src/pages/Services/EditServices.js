@@ -27,8 +27,8 @@ function EditServiceForm(props) {
         });
   };
   const handleTrangThaisChange = (e) => {
-    const isReady = e.target.value === 'true';
-    setNewService({ ...newService, trangThais: isReady });
+    const isReady = e.target.value === 'true' ? true : false;
+    setNewService({ ...newService, trangThai: isReady });
   };
 
 
@@ -119,8 +119,8 @@ function EditServiceForm(props) {
               <label>Giá</label><br/>
               <input type="text" name="gia" placeholder="Nhập giá" value={newService.gia} onChange={handleInputChange} /><br /><br />
               <div className="error-message">{errors.gia}</div><br />
-              <label for="trangThais">Trạng thái</label><br/>
-              <select name="trangThais" id="trangThais" value={newService.trangThais} onChange={handleTrangThaisChange}>
+              <label for="trangThai">Trạng thái</label><br/>
+              <select name="trangThai" id="trangThai" value={newService.trangThai} onChange={handleTrangThaisChange}>
         <option value={true}>Đã sẵn sàng</option>
         <option value={false}>Chưa sẵn sàng</option>
       </select>
