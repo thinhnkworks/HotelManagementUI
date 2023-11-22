@@ -52,6 +52,7 @@ function Login(props) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           isAdmin: formData.isAdmin,
@@ -69,7 +70,6 @@ function Login(props) {
       localStorage.setItem('token', token);
 
       console.log('Login successful!');
-      props.onLogin();
       props.onLogin(formData.isAdmin);
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -136,7 +136,7 @@ function Login(props) {
           )}
           <br/>
           <div className="loginForm"> 
-            <input type="submit" value="Đăng nhập"/>
+            <input type="submit" value="Đăng nhập" onClick={handleSubmit}/>
           </div>
         </form>
       </div>

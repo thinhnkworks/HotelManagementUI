@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
@@ -15,16 +15,23 @@ import Personnels from './pages/Personnels';
 import Login from './pages/authentication/Login.js';
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isToken, setToken] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const handleLogout = () => {
-    // Xử lý đăng xuất
-    setLoggedIn(false);
-  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const adminStatus = localStorage.getItem('isAdmin');
+
+    if (token && adminStatus) {
+      setToken(true);
+      setIsAdmin(adminStatus === 'true');
+    }
+  }, []);
+  console.log(isToken)
   return (
     <>
       <Router>
-        {isLoggedIn ? (
+        {isToken ? (
           <>
             <Navbar isAdmin={isAdmin} />
             <Header />
@@ -41,10 +48,14 @@ function App() {
             </Switch>
           </>
         ) : (
-          <Login onLogin={(isAdmin) => {
-            setLoggedIn(true);
+          <Login
+          onLogin={(isAdmin) => {
             setIsAdmin(isAdmin);
-          }} />
+            setToken(true);
+            // Store authentication information in localStorage
+            localStorage.setItem('isAdmin', isAdmin.toString());
+          }}
+        />
         )}
       </Router>
     </>

@@ -173,9 +173,9 @@ function EditBookingForm(props) {
     <div className='formAddBooking'>
       <div className="overlay">
         <div className="form-container">
-        <div>{addServiceForm && <AddServiceForm maSKDP={props.editData.maSK} onCancel={() => setAddServices(!addServiceForm)} onco />}</div>
-        <div>{addSurchargeForm && <AddSurchargeForm maSKDP={props.editData.maSK} onCancel={() => setAddSurcharges(!addSurchargeForm)} onco />}</div>
-        <div>{addViewInfoForm && <ViewInfoForm maKH={props.editData.maKH} maPhong={props.editData.maPhong} maSKDP={props.editData.maSK} onCancel={() => setAddViewInfo(!addViewInfoForm)} onco />}</div>
+        <div>{addServiceForm && <AddServiceForm maSKDP={props.editData.maSK} maNV={props.editData.maNV} onCancel={() => setAddServices(!addServiceForm)} onco />}</div>
+        <div>{addSurchargeForm && <AddSurchargeForm maSKDP={props.editData.maSK} maNV={props.editData.maNV} onCancel={() => setAddSurcharges(!addSurchargeForm)} onco />}</div>
+        <div>{addViewInfoForm && <ViewInfoForm maKH={props.editData.maKH} maPhong={props.editData.maPhong} maSKDP={props.editData.maSK} maNV={props.editData.maNV} onCancel={() => setAddViewInfo(!addViewInfoForm)} onco />}</div>
         <div>
                     {editInvoicesForm && (<EditInvoicesForm onCancel={() => {setEditInvoices(!editInvoicesForm); setSelectedInvoice(null);console.log(editInvoicesForm)}}
                                         maSKDP={props.editData.maSK}
