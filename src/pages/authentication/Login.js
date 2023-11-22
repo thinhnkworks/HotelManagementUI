@@ -88,13 +88,13 @@ function Login(props) {
           </div>
 
           <div>
-            <label className="textInput" htmlFor="usrname">Mã nhân viên</label>
+            <label className="textInput" htmlFor="usrname">Tài khoản</label>
             <input type="text" id="usrname" name="usrname" value={formData.usrname} onChange={handleInputChange} />
             {validationErrors.usrname && <div className="error-message">{validationErrors.usrname}</div>}
           </div>
 
           <div>
-            <label className="textInput" htmlFor="psw">Password</label>
+            <label className="textInput" htmlFor="psw">Mật khẩu</label>
             <input
               type="password"
               id="psw"
