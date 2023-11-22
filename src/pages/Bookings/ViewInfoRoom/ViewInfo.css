@@ -1,0 +1,30 @@
+
+  .formViewInfo .containerEditSurcharges {
+    /* Style for the form itself */
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .formViewInfo .infoClient {
+    /* Style for the infoClient section */
+    display: flex;
+    justify-content: space-between;
+    margin-right: 200px;
+  }
+  
+  .formViewInfo .column-1,
+  .column-2 {
+    /* Style for each column in infoClient */
+    width: 48%; /* Adjust the width as needed, leaving a small gap between columns */
+  }
+  
+  
+  .button {
+    /* Style for the button container */
+    margin-top: 20px; /* Adjust the margin as needed */
+  }
+  
+  
+  .formViewInfo .containerEditSurcharges input{
+    width: 300px;
+  }

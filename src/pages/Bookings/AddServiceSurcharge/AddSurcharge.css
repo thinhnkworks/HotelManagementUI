@@ -1,0 +1,36 @@
+.formSurcharge  .pagination button {
+    padding: 2px 20px;
+    position: relative;
+     top: 10px; 
+    left: 10px; 
+    display: inline;
+    height: 40px;
+    /* align-items: center; */
+    vertical-align: middle;
+    /* right: 30px; */
+    border-radius: 10px;
+    margin-left: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.formSurcharge .tableThemKH{
+    margin-top: 5px;
+    margin-left: 20px;
+    margin-right: 150px;
+}
+.formSurcharge .form-container {
+    display: flex;
+    background-color: white;
+    width: 90%;
+    height: 90%;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.pagination button.currentPage {
+    background-color: #95beeb;
+    color: black;
+  }
+  .formSurcharge  .containerEditSurcharges #maPP {
+    background-color: #fff;
+}

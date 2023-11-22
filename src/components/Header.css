@@ -1,0 +1,69 @@
+.header{
+  margin: 10px 0px 10px 0px;
+margin-left: 10px;
+padding: 0px 20px 0px 20px;
+display: flex;
+justify-content: normal;
+width: 100vw;
+}
+.nameHotel_logo{
+  margin-top: 5px;
+    display: inline-flex;
+    padding-left: 10px;
+    height: 50px;
+
+  }
+  .nameHotel_logo img,
+.nameHotel_logo .nameHotel {
+  display: inline-flex;
+  vertical-align: middle; /* Để căn giữa theo chiều dọc nếu cần */
+}
+  .nameHotel_logo .nameHotel{
+    font-size: 30px;
+    font-weight: bold;
+    color: #2F7BEB;
+  }
+  .nameHotel_logo .logo{
+    width: 30px;
+    height: 40px;
+  }
+  .searchInput{
+    padding-left: 70px ;  
+    display: inline-flex;
+    color: black;
+  }
+  .searchInput input[type=text] {
+    float: right;
+    padding: 8px;
+    padding-left: 20px ;
+    width: 400px;
+    height: 50px;
+
+    border: #000;
+    font-size: 17px;
+    background-color: #ece8e8;
+    border-radius: 30px; /* Bo góc của thanh tìm kiếm */
+  }
+  .searchInput .searchIcon{
+    margin-top: 5px;
+  }
+  .searchIcon,.searchInput{
+    padding-left: 200px;
+  }
+  .menu-bars {
+    margin-left: 2rem;
+    font-size: 2rem;
+    background: none;
+    color: #000;
+    
+  }
+  .avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline;
+    position: absolute;    /* position: absolute; Thiết lập phần tử thành vị trí tuyệt đối */
+    top: 30px; /* Đưa phần tử về phía trên cùng của trang */
+    right: 20px; /* Đưa phần tử về góc phải của trang */
+    cursor: pointer;
+  }
