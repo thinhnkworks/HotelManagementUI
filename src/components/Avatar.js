@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-
+import { useHistory } from 'react-router-dom';
 function Avatar(props) {
+  const history = useHistory();
   const [newInfo, setNewInfo] = useState({
     maNV: '',
     hoTen: '',
@@ -45,6 +46,7 @@ function Avatar(props) {
         cccd: data.data.cccd,
         quanLy: data.data.quanLy,
       }));
+      localStorage.setItem('maNV', data.data.maNV);
 
     } catch (error) {
       console.error('Error:', error);
@@ -75,8 +77,13 @@ function Avatar(props) {
   const handleLogout = () => {
     // Xóa token khỏi localStorage
     localStorage.removeItem('token');
+    localStorage.removeItem('maNV');
+    localStorage.removeItem('isAdmin');
+    
     // Gọi hàm callback để thông báo cho component cha
     props.onLogout();
+    history.push('/login');
+    
   };
 
   return (

@@ -158,7 +158,7 @@ useEffect(() => {
       <p id='title'>Phụ phí</p>
       <div className='btn_FillAdd'>
         <button id='btn_themPP' type="submit" onClick={ShowAddBookings}>Đặt phòng</button>
-        <div>{addBookingsForm && <AddSurChargeForm onCancel={() => setAddBookings(!addBookingsForm)}  onAddBooking={addBooking}/>}</div>
+        <div>{addBookingsForm && <AddSurChargeForm onCancel={() => setAddBookings(!addBookingsForm)}    onAddBooking={addBooking}/>}</div>
       </div>
       {/* class Thêm khách hàng */}
       <div className='tableThemKH'>

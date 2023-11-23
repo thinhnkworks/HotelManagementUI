@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route,useHistory } from 'react-router-dom';
 import Home from './pages/Home';
 import Booking from './pages/Booking';
 import Invoices from './pages/Invoices';
@@ -15,6 +15,7 @@ import Personnels from './pages/Personnels';
 import Login from './pages/authentication/Login.js';
 
 function App() {
+  const history = useHistory();
   const [isToken, setToken] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -54,6 +55,7 @@ function App() {
             setToken(true);
             // Store authentication information in localStorage
             localStorage.setItem('isAdmin', isAdmin.toString());
+            history.push('/');
           }}
         />
         )}
