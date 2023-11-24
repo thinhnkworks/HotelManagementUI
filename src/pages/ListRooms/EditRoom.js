@@ -3,10 +3,10 @@ import './EditRoom.css';
 
 function EditRoomForm(props) {
   const [newRoom, setNewRoom] = useState({
-    maLoaiPhong: props.editData.maLoaiPhong,
+    maLoaiPhong: props.editData.loaiPhong.maLoaiPhong,
     trangThai: props.editData.trangThai, // Thêm trạng thái vào state
   });
-  
+  console.log(props.editData.maLoaiPhong)
   const [errors, setErrors] = useState({
     maLoaiPhong: '',
     trangThai: '', // Thêm trạng thái vào errors

@@ -4,7 +4,7 @@ import './AddSurcharge.css';
 function AddSurchargeForm(props) {
   const [newSurcharge, setNewSurcharge] = useState({
     maPP: '',
-    maNV: '',
+    maNV: localStorage.getItem("maNV"),
     maSKDP: props.maSKDP,
     soLuong: '',
     thoiGian: '',

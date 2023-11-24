@@ -16,7 +16,7 @@ function AddBookingForm(props) {
   const [newBooking, setNewBooking] = useState({
     maPhong: '',
     maKH: '',
-    maNV: '',
+    maNV: localStorage.getItem("maNV"),
     soNgayO: '',
     ngayNhanPhong: '',
     ngayTraPhong: '',

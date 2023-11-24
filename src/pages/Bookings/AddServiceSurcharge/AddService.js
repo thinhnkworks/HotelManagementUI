@@ -4,7 +4,7 @@ import './AddService.css';
 function AddServiceForm(props) {
   const [newService, setNewService] = useState({
     maDV: '',
-    maNV: props.maNV,
+    maNV: localStorage.getItem("maNV"),
     maSKDP: props.maSKDP,
     soLuong: '',
     thoiGian: '',
